@@ -1,0 +1,197 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  male
+  female
+}
+
+enum Role {
+  user
+  admin
+  superAdmin
+}
+
+enum Status {
+  approve
+  reject
+}
+
+enum StatusOrder {
+  waiting_for_payment 
+  payment_confirmation
+  process
+  delivery
+  orders_confirmation 
+  canceled
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  avatar_url String? @db.VarChar(255)
+  email String @unique
+  password String
+  gender Gender
+  role Role
+  is_verified Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  product Product[]
+  warehouse Warehouse[]
+  order OrderProduct[]
+  address Address[]
+  cart Cart[]
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  product Product[]
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  category_id Int
+  categories Category @relation(fields:[category_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  user_id Int 
+  user User @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  image_url String @db.VarChar(255)
+  name String
+  description String? @db.VarChar(255)
+  price Decimal @db.Decimal(8,2)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  orderdetail OrderDetail[]
+  stocks Stock[]
+  cart Cart[]
+  stockhistory StockHistory[]
+}
+
+model Warehouse {
+  id Int @id @default(autoincrement())
+  user_id Int
+  user User @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  city_id Int
+  city City @relation(fields:[city_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  province_id Int
+  province Province @relation(fields:[province_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  name String
+  longtitude String
+  latitude String
+  location String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  stocks Stock[]
+  origin StockMutation[] @relation("FromWarehouse")
+  destination StockMutation[] @relation("ToWarehouse")
+}
+
+model Stock {
+  id Int @id @default(autoincrement())
+  product_id Int 
+  product Product @relation(fields:[product_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  warehouse_id Int 
+  warehouse Warehouse @relation(fields:[warehouse_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  quantity Int
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+model OrderProduct {
+  id Int @id @default(autoincrement())
+  user_id Int 
+  user User @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  status_order StatusOrder
+  payment_img String
+  shipping_cost Decimal @db.Decimal(10,2)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  orderdetail OrderDetail[]
+  stockhistory StockHistory[]
+}
+
+model OrderDetail {
+  id Int @id @default(autoincrement())
+  order_id Int
+  order OrderProduct @relation(fields:[order_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  product_id Int 
+  product Product @relation(fields:[product_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  address_id Int
+  address Address @relation(fields:[address_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  quantity Int
+  price Decimal @db.Decimal(10,2)
+}
+
+model Address {
+  id Int @id @default(autoincrement())
+  user_id Int 
+  user User @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  city_id Int
+  city City @relation(fields:[city_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  province_id Int
+  province Province @relation(fields:[province_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  default_address String
+  address String? @db.VarChar(255)
+  zip_code String
+  longtitude String
+  latitude String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  orderdetail OrderDetail[]
+}
+
+model Cart {
+  user_id Int
+  user User @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction) 
+  product_id Int
+  product Product @relation(fields:[product_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  qty Int
+  @@id([user_id, product_id])
+}
+
+model City {
+  id Int @id @default(autoincrement())
+  city_name String
+  province_id Int
+  warehouse Warehouse[]
+  address Address[]
+}
+
+model Province {
+  id Int @id @default(autoincrement())
+  province_name String
+  warehouse Warehouse[]
+  address Address[]
+}
+
+model StockHistory {
+  id Int @id @default(autoincrement())
+  product_id Int
+  product Product @relation(fields:[product_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  order_id Int
+  order OrderProduct @relation(fields:[order_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  stock_mutation_id Int
+  stockmutation StockMutation @relation(fields:[stock_mutation_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  qty Int
+  description String @db.VarChar(255)
+}
+
+model StockMutation {
+  id Int @id @default(autoincrement())
+  origin_id Int
+  origin Warehouse @relation(fields:[origin_id], references:[id], onDelete: NoAction,  onUpdate: NoAction, name: "FromWarehouse")
+  destination_id Int
+  destination Warehouse @relation(fields:[destination_id], references:[id], onDelete: NoAction,  onUpdate: NoAction, name: "ToWarehouse")
+  qty Int
+  status Status
+  stockhistory StockHistory[]
+}

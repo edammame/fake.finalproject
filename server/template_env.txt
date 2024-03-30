@@ -1,0 +1,5 @@
+DATABASE_URL=""
+secretKey="fakefinalproject"
+PORT=
+nodemailer_email=""
+nodemailer_password=""
