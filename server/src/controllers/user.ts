@@ -7,7 +7,6 @@ import { sign, verify } from "jsonwebtoken";
 import { mailer, transport } from "../lib/nodemailer";
 import mustache, { render } from "mustache";
 import fs from "fs";
-import { v4 as uuidv4 } from "uuid"; // Import UUID
 
 type TUser = {
   email: string;
@@ -20,11 +19,9 @@ const template = fs
 export const userController = {
   async register(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, password, firstName, lastName, gender, phoneNumber } =
-        req.body;
+      const { email, password, firstName, lastName, gender, role } = req.body;
       const salt = await genSalt(10);
       const hashedPassword = await hash(password, salt);
-      const referralCodeGenerated = uuidv4(); // Generate a new UUID for referral code
 
       const newUser: Prisma.UserCreateInput = {
         email,
@@ -32,8 +29,7 @@ export const userController = {
         firstName,
         lastName,
         gender,
-        phoneNumber,
-        referralCode: referralCodeGenerated, // Use the generated UUID as referralCode
+        role,
       };
 
       const checkUser = await prisma.user.findUnique({
@@ -51,7 +47,7 @@ export const userController = {
       res.send({
         success: true,
         message: "Registration successful",
-        referralCode: referralCodeGenerated, // Return the generated referral code to the user
+        // Return the generated referral code to the user
       });
     } catch (error) {
       next(error);

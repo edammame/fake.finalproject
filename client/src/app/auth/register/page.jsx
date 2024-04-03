@@ -20,18 +20,11 @@ function RegisterPage() {
       gender: "male",
       email: "",
       password: "",
-      phoneNumber: "",
-      referralCode: "",
     },
     validationSchema: Yup.object().shape({
       firstName: Yup.string().required(),
       email: Yup.string().required().email("not an email"),
       password: Yup.string().required().min(5),
-      phoneNumber: Yup.string()
-        .required()
-        .min(10)
-        .matches(/^\d+$/, "Invalid phone number"),
-      referralCode: Yup.string(),
     }),
     onSubmit: () => {
       signup();
@@ -133,32 +126,6 @@ function RegisterPage() {
             </select>
 
             <div className="my-1 text-red-500">{formik.errors.gender}</div>
-
-            <input
-              id="phoneNumber"
-              name="phoneNumber"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.phoneNumber}
-              placeholder="Phone Number"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md"
-            />
-
-            <div className="my-1 text-red-500">{formik.errors.phoneNumber}</div>
-
-            <input
-              id="referralCode"
-              name="referralCode"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.referralCode}
-              placeholder="Referral Code"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md"
-            />
-
-            <div className="my-1 text-red-500">
-              {formik.errors.referralCode}
-            </div>
           </div>
           <button
             type="submit"

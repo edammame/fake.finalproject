@@ -1,10 +1,10 @@
 import express, { Router } from "express";
-import { eventController } from "../controllers/events";
+// import { eventController } from "../controllers/events";
 import { verifyAdmin, verifyUser } from "../middlewares/auth-middleware";
 import { fileUploader } from "../middlewares/multer";
 export const route: Router = express.Router();
-route.get("/", eventController.getEvents);
-route.get("/:id", eventController.getEventById);
+// route.get("/", eventController.getEvents);
+// route.get("/:id", eventController.getEventById);
 route.patch(
   "/:id",
   verifyUser,
@@ -13,9 +13,9 @@ route.patch(
     destinationFolder: "/images/event_images",
     prefix: "EVENT",
     filetype: "image",
-  }).single("image"),
+  }).single("image")
 
-  eventController.editEvent
+  // eventController.editEvent
 );
 
 route.post(
@@ -26,8 +26,8 @@ route.post(
     destinationFolder: "/images/event_images",
     prefix: "EVENT",
     filetype: "image",
-  }).single("image"),
-  eventController.addEvent
+  }).single("image")
+  // eventController.addEvent
 );
 
-route.delete("/:id", verifyUser, verifyAdmin, eventController.deleteEvent);
+route.delete("/:id", verifyUser, verifyAdmin);
