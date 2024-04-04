@@ -10,6 +10,7 @@ export type TUser = {
   lastName: string;
   gender: string;
   role: string;
+  is_verified: boolean;
 };
 
 export interface ReqUser extends Request {
@@ -24,6 +25,7 @@ export const verifyUser = async (
   try {
     // const token = req.header("Authorization")?.replace("Bearer ", "");
     const token = req.headers.authorization;
+
     if (!token) throw Error("unauthorized");
 
     const verifyToken = verify(String(token), secretKey) as TUser;
@@ -48,7 +50,7 @@ export const verifyAdmin = async (
 ) => {
   try {
     const { user } = req;
-    if (user?.role !== "organizer") throw Error("organizer only");
+    if (user?.role !== "admin") throw Error("admin only");
     next();
   } catch (error) {
     next(error);

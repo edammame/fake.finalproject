@@ -14,16 +14,11 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
-app.use(
-  "/public/events",
-  express.static(`${__dirname}/public/images/event_images`)
-);
 
 const PORT = process.env.PORT;
 
 //routes
 app.use("/users", routes.userRoutes);
-app.use("/events", routes.eventRoutes);
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send({ message: error.message || "internal server error" });

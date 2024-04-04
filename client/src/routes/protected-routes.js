@@ -9,7 +9,7 @@ import LoadingPage from "@/components/loading";
 
 const userOnly = "userOnly";
 const needLogin = "needLogin";
-const organizerOnly = "organizerOnly";
+const adminOnly = "adminOnly";
 
 class Route {
   constructor(path, type) {
@@ -22,7 +22,7 @@ const routes = [];
 routes.push(new Route("/"));
 routes.push(new Route("/auth/login", userOnly));
 routes.push(new Route("/auth/register", userOnly));
-routes.push(new Route("/admin/dashboard", organizerOnly));
+routes.push(new Route("/admin/dashboard", adminOnly));
 
 export default function ProtectedPage({ children }) {
   const userSelector = useSelector((state) => state.auth);
@@ -31,7 +31,7 @@ export default function ProtectedPage({ children }) {
 
   useEffect(() => {
     const checkRoute = routes.find((route) => route.path == pathname);
-    if (checkRoute?.type == organizerOnly && userSelector.role != "organizer")
+    if (checkRoute?.type == adminOnly && userSelector.role != "admin")
       return redirect("/auth/login");
     else if (checkRoute?.type == needLogin && !userSelector.email)
       return redirect("/auth/login");

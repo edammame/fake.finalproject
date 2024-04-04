@@ -7,6 +7,7 @@ import { sign, verify } from "jsonwebtoken";
 import { mailer, transport } from "../lib/nodemailer";
 import mustache, { render } from "mustache";
 import fs from "fs";
+import { ReqUser } from "../middlewares/auth-middleware";
 
 type TUser = {
   email: string;
@@ -21,6 +22,7 @@ export const userController = {
     try {
       const { email, password, firstName, lastName, gender, role } = req.body;
       const salt = await genSalt(10);
+
       const hashedPassword = await hash(password, salt);
 
       const newUser: Prisma.UserCreateInput = {
@@ -33,21 +35,37 @@ export const userController = {
       };
 
       const checkUser = await prisma.user.findUnique({
-        where: { email },
+        where: {
+          email,
+        },
       });
 
       if (checkUser?.id) throw new Error("User already registered");
 
-      const createdUser = await prisma.user.create({
+      await prisma.user.create({
         data: newUser,
       });
 
-      // Handle referral logic here (Refer to previous instructions for detailed logic)
+      const token = sign({ email }, secretKey, {
+        expiresIn: "1hr",
+      });
+
+      const rendered = mustache.render(template, {
+        email,
+        fullname: firstName + " " + lastName,
+        verify_url: process.env.verifyURL + token,
+      });
+
+      mailer({
+        to: email,
+        subject: "Verify Account",
+        text: "",
+        html: rendered,
+      });
 
       res.send({
         success: true,
         message: "Registration successful",
-        // Return the generated referral code to the user
       });
     } catch (error) {
       next(error);
@@ -76,7 +94,7 @@ export const userController = {
       };
       if (checkPassword) {
         const token = sign(resUser, secretKey, {
-          expiresIn: "5m",
+          expiresIn: "1hr",
         });
 
         return res.send({
@@ -169,6 +187,29 @@ export const userController = {
 
       res.send({
         message: "email sent successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async verifyEmail(req: ReqUser, res: Response, next: NextFunction) {
+    try {
+      const { user } = req;
+      const verif: Prisma.UserUpdateInput = {
+        is_verified: true,
+      };
+      if (user?.is_verified) throw Error("user already verified");
+      await prisma.user.update({
+        data: verif,
+        where: {
+          id: user?.id,
+        },
+      });
+      console.log("aman");
+
+      res.send({
+        message: "success",
       });
     } catch (error) {
       next(error);
