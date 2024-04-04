@@ -71,7 +71,9 @@ function RegisterPage() {
               id="firstName"
               name="firstName"
               type="text"
-              onChange={formik.handleChange}
+              onChange={(e) =>
+                formik.setFieldValue("firstName", e.target.value)
+              }
               value={formik.values.firstName}
               placeholder="First Name"
               className="w-full px-4 py-1 border border-gray-300 rounded-md"
@@ -82,7 +84,7 @@ function RegisterPage() {
               id="lastName"
               name="lastName"
               type="text"
-              onChange={formik.handleChange}
+              onChange={(e) => formik.setFieldValue("lastName", e.target.value)}
               value={formik.values.lastName}
               placeholder="Last Name"
               className="w-full px-4 py-1 border border-gray-300 rounded-md"
@@ -99,7 +101,6 @@ function RegisterPage() {
               placeholder="Email"
               className="w-full px-4 py-2 border border-gray-300 rounded-md"
             />
-
             <div className="my-1 text-red-500">{formik.errors.email}</div>
 
             <input
@@ -111,25 +112,24 @@ function RegisterPage() {
               placeholder="Password"
               className="w-full px-4 py-2 border border-gray-300 rounded-md"
             />
-
             <div className="my-1 text-red-500">{formik.errors.password}</div>
 
             <select
               id="gender"
               name="gender"
-              onChange={formik.handleChange}
-              value={formik.values.gender}
+              onChange={(e) => formik.setFieldValue("gender", e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-md bg-white"
             >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
+              <option value={"male"}>Male</option>
+              <option value={"female"}>Female</option>
             </select>
-
             <div className="my-1 text-red-500">{formik.errors.gender}</div>
           </div>
+
           <button
             type="submit"
             className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            onClick={formik.handleSubmit}
           >
             Sign Up
           </button>
