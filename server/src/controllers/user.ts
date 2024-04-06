@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client"; // accessing interface/types
 
 import { genSalt, hash, compare } from "bcrypt";
 import { sign, verify } from "jsonwebtoken";
-import { mailer, transport } from "../lib/nodemailer";
+// import { mailer, transport } from "../lib/nodemailer";
 import mustache, { render } from "mustache";
 import fs from "fs";
 import { ReqUser } from "../middlewares/auth-middleware";
@@ -55,12 +55,12 @@ export const userController = {
         verify_url: process.env.verifyURL + token,
       });
 
-      mailer({
-        to: email,
-        subject: "Verify Account",
-        text: "",
-        html: rendered,
-      });
+      // mailer({
+      //   to: email,
+      //   subject: "Verify Account",
+      //   text: "",
+      //   html: rendered,
+      // });
 
       res.send({
         success: true,
@@ -177,12 +177,12 @@ export const userController = {
         verify_url: "",
       });
 
-      mailer({
-        to: String(email),
-        subject: "verify account",
-        text: "",
-        html: rendered,
-      });
+      // mailer({
+      //   to: String(email),
+      //   subject: "verify account",
+      //   text: "",
+      //   html: rendered,
+      // });
 
       res.send({
         message: "email sent successfully",

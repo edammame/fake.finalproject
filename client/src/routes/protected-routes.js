@@ -3,8 +3,9 @@
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import LoadingPage from "@/components/loading";
+import { redirect } from "next/dist/server/api-utils";
 
 // Define access types
 const needLogin = "needLogin";
@@ -30,8 +31,7 @@ const routes = [
 
 export default function ProtectedPage({ children }) {
   const userSelector = useSelector((state) => state.auth);
-  const router = useRouter();
-  const pathname = router.pathname; // declare the pathname variable
+  const pathname = usePathname;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -40,42 +40,32 @@ export default function ProtectedPage({ children }) {
       switch (checkRoute.type) {
         case adminOnly:
           if (userSelector.role !== "admin") {
-            router.push("/auth/login");
-            return;
+            return redirect("/auth/login");
           }
           break;
         case superAdminOnly:
           if (userSelector.role !== "superAdmin") {
-            router.push("/auth/login");
-            return;
+            return redirect("/auth/login");
           }
           break;
         case needLogin:
           if (!userSelector.isLoggedIn) {
-            router.push("/auth/login");
-            return;
+            return redirect("/auth/login");
           }
           break;
         case userOnly:
           if (userSelector.isLoggedIn) {
-            router.push("/");
-            return;
+            return redirect("/");
           }
           break;
         // No default case needed
       }
     }
 
-    const timer = setTimeout(() => {
+    setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 500);
+  }, [children, userSelector.id]);
 
-    return () => clearTimeout(timer); // Cleanup on unmount
-  }, [pathname, userSelector]); // Now pathname is correctly added as a dependency
-
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  return <>{children}</>;
+  return <div>{isLoading ? <LoadingPage /> : children}</div>;
 } // Using React.Fragment to avoid adding extra divs
