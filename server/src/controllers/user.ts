@@ -20,7 +20,7 @@ const template = fs
 export const userController = {
   async register(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, password, first_name, last_name, gender, role } = req.body;
+      const { email, password, first_name, last_name, gender } = req.body;
       const salt = await genSalt(10);
 
       const hashedPassword = await hash(password, salt);
@@ -31,8 +31,6 @@ export const userController = {
         first_name,
         last_name,
         gender,
-        role,
-        is_verified: false,
       };
 
       const checkUser = await prisma.user.findUnique({
