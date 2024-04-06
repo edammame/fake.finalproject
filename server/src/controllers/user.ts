@@ -20,7 +20,7 @@ const template = fs
 export const userController = {
   async register(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, password, firstName, lastName, gender, role } = req.body;
+      const { email, password, first_name, last_name, gender, role } = req.body;
       const salt = await genSalt(10);
 
       const hashedPassword = await hash(password, salt);
@@ -28,10 +28,11 @@ export const userController = {
       const newUser: Prisma.UserCreateInput = {
         email,
         password: hashedPassword,
-        firstName,
-        lastName,
+        first_name,
+        last_name,
         gender,
         role,
+        is_verified: false,
       };
 
       const checkUser = await prisma.user.findUnique({
@@ -52,7 +53,7 @@ export const userController = {
 
       const rendered = mustache.render(template, {
         email,
-        fullname: firstName + " " + lastName,
+        fullname: first_name + " " + last_name,
         verify_url: process.env.verifyURL + token,
       });
 
@@ -86,8 +87,8 @@ export const userController = {
       const resUser = {
         id: user.id,
         email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        first_name: user.first_name,
+        last_name: user.last_name,
         gender: user.gender,
         role: user.role,
         avatarUrl: String(req.file?.filename),
@@ -146,8 +147,8 @@ export const userController = {
           id: true,
           email: true,
           gender: true,
-          firstName: true,
-          lastName: true,
+          first_name: true,
+          last_name: true,
           role: true,
         },
         where: {

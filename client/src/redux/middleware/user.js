@@ -11,9 +11,9 @@ export const userLogin = ({ email, password }) => {
       });
       // console.log(res.data.result);
       if (res.data.result?.id) {
-        const { firstName } = res.data.result;
+        const { first_name } = res.data.result;
 
-        alert("Welcome " + firstName);
+        alert("Welcome " + first_name);
         dispatch(functionLogin(res.data.result));
 
         localStorage.setItem("user", res.data.token);

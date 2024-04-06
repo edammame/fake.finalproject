@@ -15,14 +15,14 @@ function RegisterPage() {
 
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
+      first_name: "",
+      last_name: "",
       gender: "male",
       email: "",
       password: "",
     },
     validationSchema: Yup.object().shape({
-      firstName: Yup.string().required(),
+      first_name: Yup.string().required(),
       email: Yup.string().required().email("not an email"),
       password: Yup.string().required().min(5),
     }),
@@ -33,7 +33,7 @@ function RegisterPage() {
   const signup = () => {
     const user = formik.values;
     console.log(user);
-    if (user.email && user.firstName && user.lastName && user.password) {
+    if (user.email && user.first_name && user.last_name && user.password) {
       axiosInstance()
         .post("/users", user)
         .then((res) => {
@@ -58,7 +58,6 @@ function RegisterPage() {
         objectFit="cover"
         className="absolute"
       /> */}
-      Test
       <div className="absolute inset-0 bg-black bg-opacity-60" />
       <div className="z-10 p-8 bg-white bg-opacity-90 rounded-2xl shadow-xl max-w-md w-full">
         <h1 className="text-3xl font-bold text-center mb-6">
@@ -68,29 +67,31 @@ function RegisterPage() {
           {/* ... input fields ... */}
           <div className="flex flex-col space-y-4">
             <input
-              id="firstName"
-              name="firstName"
+              id="first_name"
+              name="first_name"
               type="text"
               onChange={(e) =>
-                formik.setFieldValue("firstName", e.target.value)
+                formik.setFieldValue("first_name", e.target.value)
               }
-              value={formik.values.firstName}
+              value={formik.values.first_name}
               placeholder="First Name"
               className="w-full px-4 py-1 border border-gray-300 rounded-md"
             />
-            <div className="my-1 text-red-500">{formik.errors.firstName}</div>
+            <div className="my-1 text-red-500">{formik.errors.first_name}</div>
 
             <input
-              id="lastName"
-              name="lastName"
+              id="last_name"
+              name="last_name"
               type="text"
-              onChange={(e) => formik.setFieldValue("lastName", e.target.value)}
-              value={formik.values.lastName}
+              onChange={(e) =>
+                formik.setFieldValue("last_name", e.target.value)
+              }
+              value={formik.values.last_name}
               placeholder="Last Name"
               className="w-full px-4 py-1 border border-gray-300 rounded-md"
             />
 
-            <div className="my-1 text-red-500">{formik.errors.lastName}</div>
+            <div className="my-1 text-red-500">{formik.errors.last_name}</div>
 
             <input
               id="email"

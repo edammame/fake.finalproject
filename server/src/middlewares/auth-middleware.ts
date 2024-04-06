@@ -6,8 +6,8 @@ import { prisma, secretKey } from "..";
 export type TUser = {
   id: number;
   email: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   gender: string;
   role: string;
   is_verified: boolean;

@@ -52,11 +52,11 @@ const schema = Joi.object({
 
       return errors;
     }),
-  firstName: Joi.string()
+  first_name: Joi.string()
     .required()
     .min(5)
     .message("first name must be at least 5 characters"),
-  lastName: Joi.string().required(),
+  last_name: Joi.string().required(),
   gender: Joi.string(),
 });
 
@@ -66,13 +66,13 @@ export const validateRegister = async (
   next: NextFunction
 ) => {
   try {
-    const { email, password, firstName, lastName, gender, repeat_password } =
+    const { email, password, first_name, last_name, gender, repeat_password } =
       req.body;
     await schema.validateAsync({
       email,
       password,
-      firstName,
-      lastName,
+      first_name,
+      last_name,
       //   repeat_password,
       gender,
     });

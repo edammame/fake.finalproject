@@ -40,6 +40,14 @@ function LoginPage() {
           className="w-full p-3 rounded-lg border border-gray-300 mb-4"
           placeholder="Password"
         />
+        <div className="text-right mb-4">
+          <Link href="/auth/forgot-password">
+            <span className="text-sm text-blue-600 hover:underline cursor-pointer">
+              Forgot password?
+            </span>
+          </Link>
+        </div>
+
         <button
           onClick={login}
           className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold mb-2"
@@ -59,7 +67,9 @@ function LoginPage() {
         <div className="mt-6 text-center text-sm">
           Don't have an account?{" "}
           <Link href="/auth/register">
-            <span className="text-blue-600 cursor-pointer">Register</span>
+            <span className="text-blue-600 cursor-pointer hover:underline">
+              Register
+            </span>
           </Link>
         </div>
       </div>
