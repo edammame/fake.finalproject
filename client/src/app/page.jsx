@@ -1,9 +1,10 @@
-
+import ProductList, { ProductCard } from "@/components/productList";
 
 export default function Home() {
   return (
     <>
-      <main>halo</main>
+      {/* <ProductList /> */}
+      <ProductCard />
     </>
   );
 }

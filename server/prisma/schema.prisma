@@ -39,8 +39,8 @@ model User {
   avatar_url String? @db.VarChar(255)
   email String @unique
   password String
-  gender Gender
-  role Role
+  gender Gender?
+  role Role? @default(user)
   is_verified Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
@@ -53,7 +53,7 @@ model User {
 
 model Category {
   id Int @id @default(autoincrement())
-  name String
+  category_name String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
   product Product[]
@@ -65,8 +65,8 @@ model Product {
   categories Category @relation(fields:[category_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
   user_id Int 
   user User @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
-  image_url String @db.VarChar(255)
-  productName String
+  image_url String? @db.VarChar(255)
+  product_name String
   description String? @db.VarChar(255)
   price Decimal @db.Decimal(8,2)
   created_at DateTime @default(now())
@@ -85,7 +85,7 @@ model Warehouse {
   city City @relation(fields:[city_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
   province_id Int
   province Province @relation(fields:[province_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
-  name String
+  warehouse_name String
   longtitude String
   latitude String
   location String
