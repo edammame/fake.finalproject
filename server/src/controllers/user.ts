@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client"; // accessing interface/types
 
 import { genSalt, hash, compare } from "bcrypt";
 import { sign, verify } from "jsonwebtoken";
-// import { mailer, transport } from "../lib/nodemailer";
+import { mailer, transport } from "../lib/nodemailer";
 import mustache, { render } from "mustache";
 import fs from "fs";
 import { ReqUser } from "../middlewares/auth-middleware";
@@ -15,6 +15,10 @@ type TUser = {
 
 const template = fs
   .readFileSync(__dirname + "/../templates/verify.html")
+  .toString();
+
+const forgotPass = fs
+  .readFileSync(__dirname + "/../templates/forgotPass.html")
   .toString();
 
 export const userController = {
@@ -55,16 +59,16 @@ export const userController = {
         verify_url: process.env.verifyURL + token,
       });
 
-      // mailer({
-      //   to: email,
-      //   subject: "Verify Account",
-      //   text: "",
-      //   html: rendered,
-      // });
+      mailer({
+        to: email,
+        subject: "Verify Account",
+        text: "",
+        html: rendered,
+      });
 
       res.send({
         success: true,
-        message: "Registration successful",
+        message: "Registration successful, please verify your account",
       });
     } catch (error) {
       next(error);
@@ -81,6 +85,7 @@ export const userController = {
         },
       });
       if (!user) throw Error("incorrect email or password");
+      if (!user.is_verified) throw Error("email not verified");
       const checkPassword = await compare(String(password), user.password);
       const resUser = {
         id: user.id,
@@ -102,7 +107,6 @@ export const userController = {
           token,
         });
       }
-      // npm i jsonwebtoken @types/jsonwebtoken
 
       throw Error("email or password does not match");
     } catch (error) {
@@ -169,20 +173,30 @@ export const userController = {
   },
   async sendMail(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, fullname } = req.query;
-
-      const rendered = mustache.render(template, {
-        email,
-        fullname,
-        verify_url: "",
+      const { email } = req.query;
+      const checkUser = await prisma.user.findUnique({
+        where: {
+          email: String(email),
+        },
+      });
+      if (!checkUser) throw Error("email is not valid, please check again");
+      const token = sign({ email }, secretKey, {
+        expiresIn: "1hr",
       });
 
-      // mailer({
-      //   to: String(email),
-      //   subject: "verify account",
-      //   text: "",
-      //   html: rendered,
-      // });
+      const rendered = mustache.render(forgotPass, {
+        email,
+        first_name: checkUser.first_name,
+        last_name: checkUser.last_name,
+        verify_url: process.env.forgotPassURL + token,
+      });
+
+      mailer({
+        to: String(email),
+        subject: "verify account",
+        text: "",
+        html: rendered,
+      });
 
       res.send({
         message: "email sent successfully",

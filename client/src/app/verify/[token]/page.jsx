@@ -9,7 +9,7 @@ async function Page({ params }) {
   let message = "";
   await axiosInstanceSSR()
     .patch(
-      "/users/verify",
+      "/users/v3",
       {},
       {
         headers: {

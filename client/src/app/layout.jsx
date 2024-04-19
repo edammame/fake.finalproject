@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 import { StoreProvider } from "@/redux/store";
 import ProtectedPage from "@/routes/protected-routes";
 import AuthProvider from "@/routes/auth-provider";
+import { Providers } from "@/components/chakra-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,9 +23,11 @@ export default function RootLayout({ children }) {
           {/* <link rel="shortcut icon" href="fav.png" type="image/x-icon" /> */}
         </head>
         <body className={inter.className}>
-          <AuthProvider>
-            <ProtectedPage>{children}</ProtectedPage>
-          </AuthProvider>
+          <Providers>
+            <AuthProvider>
+              <ProtectedPage>{children}</ProtectedPage>
+            </AuthProvider>
+          </Providers>
         </body>
       </html>
     </StoreProvider>
