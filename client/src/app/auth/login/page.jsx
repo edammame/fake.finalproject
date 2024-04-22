@@ -1,4 +1,4 @@
-// File: pages/login.js
+"use client";
 import { useDispatch } from "react-redux";
 import { userLogin } from "@/redux/middleware/user";
 import Link from "next/link";
@@ -22,19 +22,25 @@ function LoginPage() {
           Log in
         </Typography>
         <form onSubmit={login} className="w-full">
+          <Typography variant="h6" color="blue-gray" className="mb-3">
+            Email
+          </Typography>
           <Input
             id="email"
             type="email"
             size="lg"
-            placeholder="Email"
+            placeholder="name@mail.com"
             className="mb-4"
             labelProps={{ className: "before:content-none after:content-none" }}
           />
+          <Typography variant="h6" color="blue-gray" className="mb-3">
+            Password
+          </Typography>
           <Input
             id="password"
             type="password"
             size="lg"
-            placeholder="Password"
+            placeholder="********"
             className="mb-4"
             labelProps={{ className: "before:content-none after:content-none" }}
           />
@@ -54,9 +60,14 @@ function LoginPage() {
         <Typography color="gray" className="text-center text-sm">
           Don't have an account?{" "}
           <Link href="/auth/register">
-            <a className="font-medium text-blue-600 hover:underline">
+            <Typography
+              as="span"
+              variant="small"
+              color="blue"
+              className="font-medium cursor-pointer hover:underline"
+            >
               Register
-            </a>
+            </Typography>
           </Link>
         </Typography>
       </Card>

@@ -4,6 +4,7 @@ import { axiosInstance } from "@/axios/axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { Card, Input, Button, Typography } from "@material-tailwind/react";
 
 function ForgotPasswordPage() {
   // const [email, setEmail] = useState("");
@@ -51,42 +52,43 @@ function ForgotPasswordPage() {
       });
   }
   return (
-    <div className="relative min-h-screen flex items-center justify-center">
-      <div className="absolute inset-0 bg-black bg-opacity-60" />
-      <div className="z-10 p-8 bg-white bg-opacity-90 rounded-2xl shadow-xl max-w-md w-full">
-        <h2 className="text-4xl font-bold mb-4 text-center">Forgot Password</h2>
-        <form className="space-y-6" onSubmit={forgotPassword}>
-          <div className="space-y-1">
-            <label htmlFor="email" className="font-bold"></label>
-            <input
-              id="email"
-              type="email"
-              autoComplete="email"
-              required
-              className="w-full p-3 rounded-lg border border-gray-300"
-              placeholder="Email"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold"
-          >
+    <div className="flex justify-center items-center min-h-screen">
+      <Card className="w-full max-w-md p-8 flex flex-col items-center bg-white bg-opacity-90 shadow-xl rounded-2xl">
+        <Typography variant="h4" color="blue-gray" className="mb-4 text-center">
+          Forgot Password
+        </Typography>
+        <form onSubmit={forgotPassword} className="w-full space-y-5">
+          <Typography variant="h6" color="black" className="mb-1">
+            Email
+          </Typography>
+          <Input
+            id="email"
+            type="email"
+            color="lightBlue"
+            size="lg"
+            outline={true}
+            placeholder="name@mail.com"
+            className="mb-4"
+          />
+          <Button type="submit" color="blue" fullWidth className="mb-4">
             Send Reset Link
-          </button>
+          </Button>
         </form>
-        <div className="flex flex-col items-center justify-between mt-4 text-xs">
+        <Typography className="mt-4 text-sm text-center">
           <Link href="/auth/login">
-            <span className="text-blue-600 hover:underline cursor-pointer">
+            <span className="text-lightBlue-600 cursor-pointer hover:underline">
               Back to login
             </span>
           </Link>
+        </Typography>
+        <Typography className="text-sm text-center">
           <Link href="/auth/register">
-            <span className="text-blue-600 hover:underline cursor-pointer mt-2">
+            <span className="text-lightBlue-600 cursor-pointer hover:underline">
               Create an account?
             </span>
           </Link>
-        </div>
-      </div>
+        </Typography>
+      </Card>
     </div>
   );
 }
