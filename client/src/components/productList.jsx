@@ -1,13 +1,22 @@
+"use client";
 import Image from "next/image";
 import product1 from "../assets/product1.jpeg";
 import { FaCartShopping } from "react-icons/fa6";
-// import { useState } from "react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Button,
+} from "@material-tailwind/react";
 
 function ProductList() {
   return (
     <>
-      <div>
+      <div className=" grid max-w-screen-2xl md:grid-cols-4 grid-cols-1 p-7 gap-3 mx-28 ">
         <ProductCard />
+        {/* buat looping disini */}
       </div>
     </>
   );
@@ -17,32 +26,46 @@ export default ProductList;
 export function ProductCard() {
   return (
     <>
-      <div className="flex flex-col items-start rounded-lg bg-[#F8F7F3]">
-        <div className="max-h-full max-w-full text-center">
+      <Card className=" w-72 hover:scale-105">
+        <CardHeader shadow={false} floated={false} className="">
           <Image
             src={product1}
-            className="h-[150px]  w-[300px] rounded-t-lg "
+            alt="card-image"
+            className="h-full w-full object-contain"
           />
-        </div>
-        <div className="md:p-5 lg:p-5 p-2 w-full h-full flex flex-col justify-between gap-2">
-          <div className=" font-bold w-full text-[#1F5673] md:text-sm text-xs">
+        </CardHeader>
+        <CardBody className=" flex flex-col">
+          <Typography
+            color="blue-gray"
+            className=" font-extrabold text-[#1e2b62] text-lg"
+          >
             AFTONSPARV
-          </div>
-          <div className=" font-medium w-full text-slate-400 md:text-base text-xs">
-            Set boneka jari 5 buah, aneka warna
-          </div>
+          </Typography>
 
-          <div className="md:flex justify-between md:text-sm text-xs">
-            <div className="text-[#E02828] font-semibold  ">
-              <sup>Rp</sup>
-              29.900
-            </div>
-            <div className="flex items-center text-[#676666] md:text-sm text-xs">
-              <FaCartShopping />
-            </div>
+          <Typography
+            variant="small"
+            color="gray"
+            className="font-normal opacity-75 text-[#222831]"
+          >
+            Set boneka jari 5 buah, aneka warna
+          </Typography>
+          <Typography color="blue-gray" className="font-semibold pt-3 text-lg">
+            <sup className=" text-xs p-0.5">Rp</sup>29.000
+          </Typography>
+          <div className=" py-3">
+            <Button
+              ripple={false}
+              fullWidth={true}
+              className=" flex gap-2 justify-center items-center bg-[#1e2b62] text-white shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+            >
+              Add to Cart <FaCartShopping className="text-white" />
+            </Button>
           </div>
-        </div>
-      </div>
+        </CardBody>
+        {/* <CardFooter className=""> */}
+
+        {/* </CardFooter> */}
+      </Card>
     </>
   );
 }

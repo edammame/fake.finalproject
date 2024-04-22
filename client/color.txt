@@ -1,0 +1,5 @@
+Backgrounds: #f2f2f2
+Primary: #1e2b62
+Secondary:  #dfdfdf
+Accent: #F05454
+Text: #222831
