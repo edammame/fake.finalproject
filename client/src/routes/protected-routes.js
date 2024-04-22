@@ -21,13 +21,14 @@ class Route {
 }
 
 // Define routes and their access types
-const routes = [
-  new Route("/", userOnly),
-  new Route("/auth/login", needLogin),
-  new Route("/auth/register", needLogin),
-  new Route("/admin/dashboard", adminOnly),
-  new Route("/super-admin/dashboard", superAdminOnly), // example route for superAdmin
-];
+const routes = [];
+
+routes.push(new Route("/", userOnly)),
+  routes.push(new Route("/auth/login", userOnly)),
+  routes.push(new Route("/auth/register", userOnly)),
+  routes.push(new Route("/auth/forgot-password", userOnly)),
+  routes.push(new Route("/admin/dashboard", adminOnly)),
+  routes.push(new Route("/super-admin/dashboard", superAdminOnly)); // example route for superAdmin
 
 export default function ProtectedPage({ children }) {
   const userSelector = useSelector((state) => state.auth);
