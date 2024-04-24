@@ -55,3 +55,17 @@ export const verifyAdmin = async (
     next(error);
   }
 };
+
+export const verifysuperAdmin = async (
+  req: ReqUser,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { user } = req;
+    if (user?.role !== "superAdmin") throw Error("superAdmin only");
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
