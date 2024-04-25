@@ -29,7 +29,7 @@ export const verifyUser = async (
 
     const verifyToken = verify(String(token), secretKey) as TUser;
 
-    const user = (await prisma.users.findUnique({
+    const user = (await prisma.user.findUnique({
       where: {
         email: verifyToken?.email,
       },

@@ -29,7 +29,7 @@ export const userController = {
       6;
       const hashedPassword = await hash(password, salt);
 
-      const newUser: Prisma.UsersCreateInput = {
+      const newUser: Prisma.UserCreateInput = {
         email,
         password: hashedPassword,
         first_name,
@@ -37,7 +37,7 @@ export const userController = {
         gender,
       };
 
-      const checkUser = await prisma.users.findUnique({
+      const checkUser = await prisma.user.findUnique({
         where: {
           email,
         },
@@ -45,7 +45,7 @@ export const userController = {
 
       if (checkUser?.id) throw new Error("User already registered");
 
-      await prisma.users.create({
+      await prisma.user.create({
         data: newUser,
       });
 
@@ -79,7 +79,7 @@ export const userController = {
     try {
       const { email, password } = req.query;
 
-      const user = await prisma.users.findUnique({
+      const user = await prisma.user.findUnique({
         where: {
           email: String(email),
         },
@@ -115,18 +115,19 @@ export const userController = {
   },
   async forgotPassword(req: Request, res: Response, next: NextFunction) {
     try {
-      const { password } = req.body;
+      const { password, email } = req.body;
 
       const salt = await genSalt(10);
 
       const hashedPassword = await hash(password, salt);
-      const userEditPassword: Prisma.UsersUpdateInput = {
+      const userEditPassword: Prisma.UserUpdateInput = {
         password: hashedPassword,
       };
-      await prisma.users.update({
+      6;
+      await prisma.user.update({
         data: userEditPassword,
         where: {
-          email: String(req.user?.email),
+          email: String(email),
         },
       });
       res.send({
@@ -144,7 +145,7 @@ export const userController = {
       if (!authorization) throw Error("unauthorized");
 
       const verifyUser = verify(authorization, secretKey) as TUser;
-      const checkUser = await prisma.users.findUnique({
+      const checkUser = await prisma.user.findUnique({
         select: {
           id: true,
           email: true,
@@ -174,7 +175,7 @@ export const userController = {
   async sendMail(req: Request, res: Response, next: NextFunction) {
     try {
       const { email } = req.query;
-      const checkUser = await prisma.users.findUnique({
+      const checkUser = await prisma.user.findUnique({
         where: {
           email: String(email),
         },
@@ -209,11 +210,11 @@ export const userController = {
   async verifyEmail(req: ReqUser, res: Response, next: NextFunction) {
     try {
       const { user } = req;
-      const verif: Prisma.UsersUpdateInput = {
+      const verif: Prisma.UserUpdateInput = {
         is_verified: true,
       };
       if (user?.is_verified) throw Error("user already verified");
-      await prisma.users.update({
+      await prisma.user.update({
         data: verif,
         where: {
           id: user?.id,
