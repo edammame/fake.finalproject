@@ -32,7 +32,7 @@ enum StatusOrder {
   canceled
 }
 
-model User {
+model Users {
   id Int @id @default(autoincrement())
   first_name String
   last_name String
@@ -64,7 +64,7 @@ model Product {
   category_id Int
   categories Category @relation(fields:[category_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
   user_id Int 
-  user User @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  user Users @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
   image_url String @db.VarChar(255)
   product_name String
   description String? @db.VarChar(255)
@@ -80,7 +80,7 @@ model Product {
 model Warehouse {
   id Int @id @default(autoincrement())
   user_id Int
-  user User @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  user Users @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
   city_id Int
   city City @relation(fields:[city_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
   province_id Int
@@ -110,7 +110,7 @@ model Stock {
 model OrderProduct {
   id Int @id @default(autoincrement())
   user_id Int 
-  user User @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  user Users @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
   status_order StatusOrder
   payment_img String
   shipping_cost Decimal @db.Decimal(10,2)
@@ -135,7 +135,7 @@ model OrderDetail {
 model Address {
   id Int @id @default(autoincrement())
   user_id Int 
-  user User @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
+  user Users @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
   city_id Int
   city City @relation(fields:[city_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
   province_id Int
@@ -152,7 +152,7 @@ model Address {
 
 model Cart {
   user_id Int
-  user User @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction) 
+  user Users @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction) 
   product_id Int
   product Product @relation(fields:[product_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
   qty Int
