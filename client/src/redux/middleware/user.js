@@ -15,7 +15,7 @@ export const userLogin = ({ email, password }) => {
         const { first_name } = res.data.result;
 
         Swal.fire({
-          title: "Success!",
+          title: "Success! Welcome " + first_name,
           icon: "success",
           timer: 2000,
           showConfirmButton: false,

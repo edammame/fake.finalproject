@@ -66,7 +66,7 @@ export default function ProtectedPage({ children }) {
     setTimeout(() => {
       setIsLoading(false);
     }, 500);
-  }, [children, userSelector.id]);
+  }, [children, userSelector.id, pathname]);
 
   return <div>{isLoading ? <LoadingPage /> : children}</div>;
 } // Using React.Fragment to avoid adding extra divs
