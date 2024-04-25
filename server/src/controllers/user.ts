@@ -85,7 +85,7 @@ export const userController = {
         },
       });
       if (!user) throw Error("incorrect email or password");
-      // if (!user.is_verified) throw Error("email not verified");
+      if (!user.is_verified) throw Error("email not verified");
       const checkPassword = await compare(String(password), user.password);
       const resUser = {
         id: user.id,
