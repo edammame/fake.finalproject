@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import YupPassword from "yup-password";
-import { useFormik } from "formik";
+import { Form, useFormik } from "formik";
 import NextLink from "next/link";
 import { Link as ChakraLink } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -35,6 +35,7 @@ function RegisterPage() {
 
   YupPassword(Yup);
   const toast = useToast();
+
   const initialValues = {
     email: "",
     password: "",
@@ -114,6 +115,7 @@ function RegisterPage() {
           <Heading mb={6} textAlign="center">
             Register
           </Heading>
+
           <FormControl id="email">
             <FormLabel>First Name</FormLabel>
             <Input type="text" id="first_name" />
