@@ -26,7 +26,7 @@ export const userController = {
     try {
       const { email, password, first_name, last_name, gender } = req.body;
       const salt = await genSalt(10);
-
+      6;
       const hashedPassword = await hash(password, salt);
 
       const newUser: Prisma.UsersCreateInput = {
