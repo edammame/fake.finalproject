@@ -1,25 +1,24 @@
-// File: pages/auth/forgotpassword.js
+/** @format */
 "use client";
 import { axiosInstance } from "@/axios/axios";
-import Link from "next/link";
+import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import { Card, Input, Button, Typography } from "@material-tailwind/react";
+import {
+  Flex,
+  Box,
+  VStack,
+  Heading,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Text,
+  HStack,
+  Link as ChakraLink,
+} from "@chakra-ui/react";
 
-function ForgotPasswordPage() {
-  // const [email, setEmail] = useState("");
-  // const [message, setMessage] = useState("");
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     // Sesuaikan dengan endpoint API Anda
-  //     const response = await axios.post("/api/auth/forgot-password", { email });
-  //     setMessage(response.data.message);
-  //   } catch (error) {
-  //     setMessage("An error occurred. Please try again later.");
-  //   }
-  // };
+function Page() {
   const router = useRouter();
   function forgotPassword() {
     const email = document.getElementById("email").value;
@@ -52,45 +51,39 @@ function ForgotPasswordPage() {
       });
   }
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <Card className="w-full max-w-md p-8 flex flex-col items-center bg-white bg-opacity-90 shadow-xl rounded-2xl">
-        <Typography variant="h4" color="blue-gray" className="mb-4 text-center">
-          Forgot Password
-        </Typography>
-        <form onSubmit={forgotPassword} className="w-full space-y-5">
-          <Typography variant="h6" color="black" className="mb-1">
-            Email
-          </Typography>
-          <Input
-            id="email"
-            type="email"
-            color="lightBlue"
-            size="lg"
-            outline={true}
-            placeholder="name@mail.com"
-            className="mb-4"
-          />
-          <Button type="submit" color="blue" fullWidth className="mb-4">
+    <Flex align="center" justify="center" h="100vh" p={8} bg="gray.100">
+      <Box w="full" maxW="sm" p={6} boxShadow="xl" borderRadius="lg" bg="white">
+        <VStack spacing={4} align="stretch">
+          <Heading mb={6} textAlign="center">
+            Forgot Password
+          </Heading>
+          <FormControl>
+            <FormLabel>Email</FormLabel>
+            <Input type="email" placeholder="name@mail.com" />
+          </FormControl>
+          <Button colorScheme="blue" onClick={forgotPassword} w="full" mt={4}>
             Send Reset Link
           </Button>
-        </form>
-        <Typography className="mt-4 text-sm text-center">
-          <Link href="/auth/login">
-            <span className="text-lightBlue-600 cursor-pointer hover:underline">
-              Back to login
-            </span>
-          </Link>
-        </Typography>
-        <Typography className="text-sm text-center">
-          <Link href="/auth/register">
-            <span className="text-lightBlue-600 cursor-pointer hover:underline">
-              Create an account?
-            </span>
-          </Link>
-        </Typography>
-      </Card>
-    </div>
+          <HStack justifyContent="center" spacing={1} mt={1}>
+            <Text fontSize="sm">Have an account?</Text>
+            <NextLink href="/auth/login" passHref>
+              <ChakraLink color="blue.600" fontSize="sm">
+                Login
+              </ChakraLink>
+            </NextLink>
+          </HStack>
+          <HStack justifyContent="center" mt={1} spacing={1}>
+            <Text fontSize="sm">Create an account?</Text>
+            <NextLink href="/auth/register" passHref>
+              <ChakraLink color="blue.600" fontSize="sm">
+                Register
+              </ChakraLink>
+            </NextLink>
+          </HStack>
+        </VStack>
+      </Box>
+    </Flex>
   );
 }
 
-export default ForgotPasswordPage;
+export default Page;

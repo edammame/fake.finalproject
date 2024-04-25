@@ -1,8 +1,21 @@
 "use client";
 import { useDispatch } from "react-redux";
 import { userLogin } from "@/redux/middleware/user";
-import Link from "next/link";
-import { Card, Input, Button, Typography } from "@material-tailwind/react";
+import { Link as ChakraLink } from "@chakra-ui/react";
+import NextLink from "next/link";
+import {
+  Box,
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Heading,
+  Text,
+  VStack,
+  HStack,
+  Spacer,
+} from "@chakra-ui/react";
 
 function LoginPage() {
   const dispatch = useDispatch();
@@ -16,62 +29,43 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <Card className="w-full max-w-md p-8 flex flex-col items-center">
-        <Typography variant="h4" color="blue-gray" className="text-center mb-4">
-          Log in
-        </Typography>
-        <form onSubmit={login} className="w-full">
-          <Typography variant="h6" color="blue-gray" className="mb-3">
-            Email
-          </Typography>
-          <Input
-            id="email"
-            type="email"
-            size="lg"
-            placeholder="name@mail.com"
-            className="mb-4"
-            labelProps={{ className: "before:content-none after:content-none" }}
-          />
-          <Typography variant="h6" color="blue-gray" className="mb-3">
-            Password
-          </Typography>
-          <Input
-            id="password"
-            type="password"
-            size="lg"
-            placeholder="********"
-            className="mb-4"
-            labelProps={{ className: "before:content-none after:content-none" }}
-          />
-          <Link href="/auth/forgot-password">
-            <Typography
-              variant="small"
-              color="gray"
-              className="cursor-pointer hover:underline text-right mb-4"
-            >
-              Forgot password?
-            </Typography>
-          </Link>
-          <Button type="submit" color="blue" fullWidth className="mb-4">
-            Log In
-          </Button>
-        </form>
-        <Typography color="gray" className="text-center text-sm">
-          Don't have an account?{" "}
-          <Link href="/auth/register">
-            <Typography
-              as="span"
-              variant="small"
-              color="blue"
-              className="font-medium cursor-pointer hover:underline"
-            >
-              Register
-            </Typography>
-          </Link>
-        </Typography>
-      </Card>
-    </div>
+    <Flex align="center" justify="center" h="100vh" p={8} bg="gray.100">
+      <Box w="full" maxW="md" p={8} boxShadow="xl" borderRadius="lg" bg="white">
+        <VStack spacing={6} align="stretch">
+          <Heading mb={6} textAlign="center">
+            Log in
+          </Heading>
+          <form onSubmit={login}>
+            <FormControl id="email" mb={4}>
+              <FormLabel>Email</FormLabel>
+              <Input type="email" placeholder="name@mail.com" />
+            </FormControl>
+            <FormControl id="password" mb={4}>
+              <FormLabel>Password</FormLabel>
+              <Input type="password" placeholder="********" />
+            </FormControl>
+            <Flex justify="flex-end">
+              <NextLink href="/auth/forgot-password" passHref>
+                <ChakraLink color="blue.600" fontSize="sm">
+                  Forgot password?
+                </ChakraLink>
+              </NextLink>
+            </Flex>
+            <Button colorScheme="blue" type="submit" w="full" mt={4}>
+              Log In
+            </Button>
+          </form>
+          <HStack justify="center">
+            <Text fontSize="sm">Don’t have an account?</Text>
+            <NextLink href="/auth/register" passHref>
+              <ChakraLink color="blue.600" fontSize="sm" fontWeight="medium">
+                Register
+              </ChakraLink>
+            </NextLink>
+          </HStack>
+        </VStack>
+      </Box>
+    </Flex>
   );
 }
 
