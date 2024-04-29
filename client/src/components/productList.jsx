@@ -10,6 +10,8 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import Pagination from "./pagination";
+import Link from "next/link";
 
 function ProductList() {
   return (
@@ -17,6 +19,9 @@ function ProductList() {
       <div className=" grid max-w-screen-2xl md:grid-cols-4 grid-cols-1 p-7 gap-3 mx-28 ">
         <ProductCard />
         {/* buat looping disini */}
+      </div>
+      <div className=" flex items-center justify-center">
+        <Pagination />
       </div>
     </>
   );
@@ -26,6 +31,7 @@ export default ProductList;
 export function ProductCard() {
   return (
     <>
+      {/* <Link href={"/products/" + id}> */}
       <Card className=" w-72 hover:scale-105">
         <CardHeader shadow={false} floated={false} className="">
           <Image
@@ -49,6 +55,7 @@ export function ProductCard() {
           >
             Set boneka jari 5 buah, aneka warna
           </Typography>
+          {/* tambahin short description di db? */}
           <Typography color="blue-gray" className="font-semibold pt-3 text-lg">
             <sup className=" text-xs p-0.5">Rp</sup>29.000
           </Typography>
@@ -62,10 +69,8 @@ export function ProductCard() {
             </Button>
           </div>
         </CardBody>
-        {/* <CardFooter className=""> */}
-
-        {/* </CardFooter> */}
       </Card>
+      {/* </Link> */}
     </>
   );
 }
