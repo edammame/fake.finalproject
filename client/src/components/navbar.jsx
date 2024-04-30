@@ -60,9 +60,9 @@ function NavbarComponent() {
           {/* <li className="hover:underline hover:text-[#23A6F0] p-4 text-gray-400 font-semibold text-sm">
             <Link href="/">Find Events</Link>
           </li> */}
-          <li className="hover:underline hover:text-[#23A6F0] p-4 text-gray-400 font-semibold text-sm">
+          {/* <li className="hover:underline hover:text-[#23A6F0] p-4 text-gray-400 font-semibold text-sm">
             <Link href="/admin/dashboard">Create Events</Link>
-          </li>
+          </li> */}
           {/* <li className="hover:underline hover:text-[#23A6F0] p-4 text-gray-400 font-semibold text-sm">
             <Link href="/">Transaction</Link>
           </li> */}
