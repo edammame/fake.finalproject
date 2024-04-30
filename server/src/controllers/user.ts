@@ -193,7 +193,7 @@ export const userController = {
 
       mailer({
         to: String(email),
-        subject: "verify account",
+        subject: "Verify Account",
         text: "",
         html: rendered,
       });

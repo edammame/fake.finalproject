@@ -57,10 +57,10 @@ function PasswordChangerComponent({ token }) {
     }),
     async onSubmit(values) {
       try {
-        const { password } = values;
+        const { password, email } = values;
         const res = await axiosInstanceSSR().patch(
           "/users/v4",
-          { password },
+          { password, email },
           {
             headers: {
               Authorization: token,
@@ -118,7 +118,7 @@ function PasswordChangerComponent({ token }) {
                 </FormHelperText>
               </FormControl>
 
-              <FormControl type="password" id="confirmPassword" mb={4}>
+              <FormControl id="confirmPassword" mb={4}>
                 <FormLabel>Confirm Password </FormLabel>
                 <Input type="password" />
                 <FormHelperText color={"red"}>
