@@ -112,23 +112,15 @@ function PasswordChangerComponent({ token }) {
             <form onSubmit={formik.handleSubmit}>
               <FormControl id="password" mb={4}>
                 <FormLabel>New Password</FormLabel>
-                <Input
-                  type="password"
-                  onChange={formik.handleChange}
-                  value={formik.values.password}
-                />
+                <Input type="password" />
                 <FormHelperText color="red">
                   {formik.errors.password}
                 </FormHelperText>
               </FormControl>
 
-              <FormControl id="confirmPassword" mb={4}>
+              <FormControl type="password" id="confirmPassword" mb={4}>
                 <FormLabel>Confirm Password </FormLabel>
-                <Input
-                  type="password"
-                  onChange={formik.handleChange}
-                  value={formik.values.confirmPassword}
-                />
+                <Input type="password" />
                 <FormHelperText color={"red"}>
                   {formik.errors.confirmPassword}
                 </FormHelperText>
