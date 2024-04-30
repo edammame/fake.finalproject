@@ -14,10 +14,16 @@ import {
   RadioGroup,
   Stack,
   Radio,
+  HStack,
+  VStack,
+  Link as ChakraLink,
+  Box,
+  Text,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import YupPassword from "yup-password";
 import { useFormik } from "formik";
+import NextLink from "next/link";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { axiosInstanceSSR } from "@/axios/axios";
@@ -90,33 +96,64 @@ function PasswordChangerComponent({ token }) {
   }, [formik.values]);
   return (
     <>
-      <Flex className=" max-w-96 w-full flex-col gap-2 ">
-        <Heading> Change Password</Heading>
-        <FormControl className="flex flex-col gap-2">
-          <div>
-            <FormLabel>Password </FormLabel>
-            <Input type="password" id="password" />
-            <FormHelperText color={"red"}>
-              {formik.errors.password}
-            </FormHelperText>
-          </div>
-          <div>
-            <FormLabel>Confirm Password </FormLabel>
-            <Input type="password" id="confirmPassword" />
-            <FormHelperText color={"red"}>
-              {formik.errors.confirmPassword}
-            </FormHelperText>
-          </div>
-        </FormControl>
-        <div>
-          Have account ?{" "}
-          <Link href="/auth/login" className="text-[#4F46E5] font-bold">
-            Login
-          </Link>
-        </div>
-        <Button type="button" colorScheme={"facebook"} onClick={inputFormik}>
-          Change Password
-        </Button>
+      <Flex align="center" justify="center" h="100vh" p={8} bg="gray.100">
+        <Box
+          w="full"
+          maxW="md"
+          p={8}
+          boxShadow="xl"
+          borderRadius="lg"
+          bg="white"
+        >
+          <VStack spacing={6} align="stretch">
+            <Heading mb={6} textAlign="center">
+              Change Password
+            </Heading>
+            <form onSubmit={formik.handleSubmit}>
+              <FormControl id="password" mb={4}>
+                <FormLabel>New Password</FormLabel>
+                <Input
+                  type="password"
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
+                />
+                <FormHelperText color="red">
+                  {formik.errors.password}
+                </FormHelperText>
+              </FormControl>
+
+              <FormControl id="confirmPassword" mb={4}>
+                <FormLabel>Confirm Password </FormLabel>
+                <Input
+                  type="password"
+                  onChange={formik.handleChange}
+                  value={formik.values.confirmPassword}
+                />
+                <FormHelperText color={"red"}>
+                  {formik.errors.confirmPassword}
+                </FormHelperText>
+              </FormControl>
+
+              <Button
+                colorScheme="blue"
+                type="submit"
+                onClick={inputFormik}
+                w="full"
+                mt={4}
+              >
+                Change Password
+              </Button>
+            </form>
+            <HStack justify="center" mt={4}>
+              <Text fontSize="sm">Already have an account?</Text>
+              <NextLink href="/auth/login" passHref>
+                <ChakraLink color="blue.600" fontSize="sm" fontWeight="medium">
+                  Login
+                </ChakraLink>
+              </NextLink>
+            </HStack>
+          </VStack>
+        </Box>
       </Flex>
     </>
   );

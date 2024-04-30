@@ -1,6 +1,7 @@
 /** @format */
 "use client";
 import { axiosInstance } from "@/axios/axios";
+import React, { useState } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
@@ -20,9 +21,9 @@ import {
 
 function Page() {
   const router = useRouter();
-  function forgotPassword() {
-    const email = document.getElementById("email").value;
+  const [email, setEmail] = useState("");
 
+  function forgotPassword() {
     axiosInstance()
       .get("/users/v2", {
         params: { email },
@@ -57,13 +58,25 @@ function Page() {
           <Heading mb={6} textAlign="center">
             Forgot Password
           </Heading>
-          <FormControl>
-            <FormLabel>Email</FormLabel>
-            <Input type="email" placeholder="name@mail.com" />
-          </FormControl>
-          <Button colorScheme="blue" onClick={forgotPassword} w="full" mt={4}>
-            Send Reset Link
-          </Button>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              forgotPassword();
+            }}
+          >
+            <FormControl>
+              <FormLabel>Email</FormLabel>
+              <Input
+                type="email"
+                placeholder="name@mail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </FormControl>
+            <Button colorScheme="blue" onClick={forgotPassword} w="full" mt={4}>
+              Send Reset Link
+            </Button>
+          </form>
           <HStack justifyContent="center" spacing={1} mt={1}>
             <Text fontSize="sm">Have an account?</Text>
             <NextLink href="/auth/login" passHref>

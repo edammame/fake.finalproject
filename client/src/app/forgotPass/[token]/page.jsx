@@ -5,10 +5,6 @@ import { axiosInstanceSSR } from "@/axios/axios";
 
 async function Page({ params }) {
   const token = params.token;
-  return (
-    <Center className=" min-h-screen ">
-      <PasswordChangerComponent token={token} />
-    </Center>
-  );
+  return <PasswordChangerComponent token={token} />;
 }
 export default Page;
