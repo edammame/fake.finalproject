@@ -31,46 +31,49 @@ export default ProductList;
 export function ProductCard() {
   return (
     <>
-      {/* <Link href={"/products/" + id}> */}
-      <Card className=" w-72 hover:scale-105">
-        <CardHeader shadow={false} floated={false} className="">
-          <Image
-            src={product1}
-            alt="card-image"
-            className="h-full w-full object-contain"
-          />
-        </CardHeader>
-        <CardBody className=" flex flex-col">
-          <Typography
-            color="blue-gray"
-            className=" font-extrabold text-[#1e2b62] text-lg"
-          >
-            AFTONSPARV
-          </Typography>
-
-          <Typography
-            variant="small"
-            color="gray"
-            className="font-normal opacity-75 text-[#222831]"
-          >
-            Set boneka jari 5 buah, aneka warna
-          </Typography>
-          {/* tambahin short description di db? */}
-          <Typography color="blue-gray" className="font-semibold pt-3 text-lg">
-            <sup className=" text-xs p-0.5">Rp</sup>29.000
-          </Typography>
-          <div className=" py-3">
-            <Button
-              ripple={false}
-              fullWidth={true}
-              className=" flex gap-2 justify-center items-center bg-[#1e2b62] text-white shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+      <Link href={"/product"}>
+        <Card className=" w-72 hover:scale-105">
+          <CardHeader shadow={false} floated={false} className="">
+            <Image
+              src={product1}
+              alt="card-image"
+              className="h-full w-full object-contain"
+            />
+          </CardHeader>
+          <CardBody className=" flex flex-col">
+            <Typography
+              color="blue-gray"
+              className=" font-extrabold text-[#1e2b62] text-lg"
             >
-              Add to Cart <FaCartShopping className="text-white" />
-            </Button>
-          </div>
-        </CardBody>
-      </Card>
-      {/* </Link> */}
+              AFTONSPARV
+            </Typography>
+
+            <Typography
+              variant="small"
+              color="gray"
+              className="font-normal opacity-75 text-[#222831]"
+            >
+              Set boneka jari 5 buah, aneka warna
+            </Typography>
+            {/* tambahin short description di db? */}
+            <Typography
+              color="blue-gray"
+              className="font-semibold pt-3 text-lg"
+            >
+              <sup className=" text-xs p-0.5">Rp</sup>29.000
+            </Typography>
+            <div className=" py-3">
+              <Button
+                ripple={false}
+                fullWidth={true}
+                className=" flex gap-2 justify-center items-center bg-[#1e2b62] text-white shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+              >
+                Add to Cart <FaCartShopping className="text-white" />
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+      </Link>
     </>
   );
 }
