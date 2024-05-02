@@ -25,9 +25,7 @@ export async function addToCart(req: Request, res: Response): Promise<void> {
     });
     res.json(cartItem);
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Tidak dapat menambahkan produk ke keranjang." });
+    res.status(500).json({ error: "Unable to add products to cart" });
   }
 }
 
@@ -49,9 +47,7 @@ export async function updateCartItem(
     });
     res.json(updatedCartItem);
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Tidak dapat memperbarui produk dalam keranjang." });
+    res.status(500).json({ error: "Unable to update products in cart" });
   }
 }
 
@@ -70,11 +66,9 @@ export async function deleteFromCart(
         },
       },
     });
-    res.json({ message: "Produk telah dihapus dari keranjang." });
+    res.json({ message: "Product has been removed from cart" });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Tidak dapat menghapus produk dari keranjang." });
+    res.status(500).json({ error: "Cannot remove products from cart" });
   }
 }
 
@@ -116,6 +110,6 @@ export async function createOrder(req: Request, res: Response): Promise<void> {
     res.json(order);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Tidak dapat membuat pesanan baru." });
+    res.status(500).json({ error: "Unable to create new orders" });
   }
 }
