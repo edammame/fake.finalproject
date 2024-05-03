@@ -68,7 +68,6 @@ function Page() {
               <FormLabel>Email</FormLabel>
               <Input
                 type="email"
-                placeholder="name@mail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />

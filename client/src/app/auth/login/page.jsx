@@ -4,20 +4,25 @@ import { userLogin } from "@/redux/middleware/user";
 import { Link as ChakraLink } from "@chakra-ui/react";
 import NextLink from "next/link";
 import {
-  Box,
-  Flex,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
   FormControl,
   FormLabel,
   Input,
-  Button,
-  Heading,
-  Text,
   VStack,
-  HStack,
-  Spacer,
+  Flex,
+  Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 function LoginPage() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
 
   const login = (e) => {
@@ -26,46 +31,54 @@ function LoginPage() {
     const password = document.getElementById("password").value;
 
     dispatch(userLogin({ email, password }));
+    onClose();
   };
 
   return (
-    <Flex align="center" justify="center" h="100vh" p={8} bg="gray.100">
-      <Box w="full" maxW="md" p={8} boxShadow="xl" borderRadius="lg" bg="white">
-        <VStack spacing={6} align="stretch">
-          <Heading mb={6} textAlign="center">
-            Log in
-          </Heading>
-          <form onSubmit={login}>
-            <FormControl id="email" mb={4}>
-              <FormLabel>Email</FormLabel>
-              <Input type="email" placeholder="name@mail.com" />
-            </FormControl>
-            <FormControl id="password" mb={4}>
-              <FormLabel>Password</FormLabel>
-              <Input type="password" placeholder="********" />
-            </FormControl>
-            <Flex justify="flex-end">
-              <NextLink href="/auth/forgot-password" passHref>
-                <ChakraLink color="blue.600" fontSize="sm">
-                  Forgot password?
-                </ChakraLink>
-              </NextLink>
-            </Flex>
-            <Button colorScheme="blue" type="submit" w="full" mt={4}>
-              Log In
-            </Button>
-          </form>
-          <HStack justify="center">
+    <>
+      <Button onClick={onOpen} colorScheme="blue">
+        Log In
+      </Button>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Log in</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <VStack spacing={4}>
+              <form onSubmit={login}>
+                <FormControl id="email">
+                  <FormLabel>Email</FormLabel>
+                  <Input type="email" />
+                </FormControl>
+                <FormControl id="password">
+                  <FormLabel>Password</FormLabel>
+                  <Input type="password" />
+                </FormControl>
+                <Flex justify="flex-end">
+                  <NextLink href="/auth/forgot-password" passHref>
+                    <ChakraLink color="blue.600" fontSize="sm">
+                      Forgot password?
+                    </ChakraLink>
+                  </NextLink>
+                </Flex>
+                <Button colorScheme="blue" type="submit" w="full" mt={4}>
+                  Log In
+                </Button>
+              </form>
+            </VStack>
+          </ModalBody>
+          <ModalFooter>
             <Text fontSize="sm">Don’t have an account?</Text>
             <NextLink href="/auth/register" passHref>
               <ChakraLink color="blue.600" fontSize="sm" fontWeight="medium">
                 Register
               </ChakraLink>
             </NextLink>
-          </HStack>
-        </VStack>
-      </Box>
-    </Flex>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 }
 
