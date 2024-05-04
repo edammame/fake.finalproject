@@ -52,8 +52,15 @@ function Page() {
       });
   }
   return (
-    <Flex align="center" justify="center" h="100vh" p={8} bg="gray.100">
-      <Box w="full" maxW="sm" p={6} boxShadow="xl" borderRadius="lg" bg="white">
+    <Flex align="center" justify="center" h="100vh" p={8}>
+      <Box
+        w="full"
+        maxW="sm"
+        p={6}
+        boxShadow="2xl"
+        borderRadius="lg"
+        bg="white"
+      >
         <VStack spacing={4} align="stretch">
           <Heading mb={6} textAlign="center">
             Forgot Password

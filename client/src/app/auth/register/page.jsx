@@ -109,8 +109,15 @@ function RegisterPage() {
   }, [formik.values]);
 
   return (
-    <Flex align="center" justify="center" h="100vh" p={8} bg="gray.100">
-      <Box w="full" maxW="md" p={8} boxShadow="xl" borderRadius="lg" bg="white">
+    <Flex align="center" justify="center" h="100vh" p={8}>
+      <Box
+        w="full"
+        maxW="md"
+        p={8}
+        boxShadow="2xl"
+        borderRadius="lg"
+        bg="white"
+      >
         <VStack spacing={4} align="stretch">
           <Heading mb={6} textAlign="center">
             Register

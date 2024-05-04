@@ -96,12 +96,12 @@ function PasswordChangerComponent({ token }) {
   }, [formik.values]);
   return (
     <>
-      <Flex align="center" justify="center" h="100vh" p={8} bg="gray.100">
+      <Flex align="center" justify="center" h="100vh" p={8}>
         <Box
           w="full"
           maxW="md"
           p={8}
-          boxShadow="xl"
+          boxShadow="2xl"
           borderRadius="lg"
           bg="white"
         >
