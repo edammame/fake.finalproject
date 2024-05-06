@@ -113,9 +113,10 @@ export const userController = {
       next(error);
     }
   },
-  async forgotPassword(req: Request, res: Response, next: NextFunction) {
+  async forgotPassword(req: ReqUser, res: Response, next: NextFunction) {
     try {
       const { password, email } = req.body;
+      console.log(req.user);
 
       const salt = await genSalt(10);
 
@@ -126,7 +127,7 @@ export const userController = {
       await prisma.user.update({
         data: userEditPassword,
         where: {
-          email: String(email),
+          email: String(req.user?.email),
         },
       });
       res.send({

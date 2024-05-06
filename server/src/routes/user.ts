@@ -12,4 +12,4 @@ route.get("/v2", userController.sendMail);
 route.patch("/v3", verifyUser, userController.verifyEmail);
 
 route.post("/", userController.register);
-route.patch("/v4", userController.forgotPassword);
+route.patch("/v4", verifyUser, userController.forgotPassword);
