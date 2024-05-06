@@ -24,61 +24,134 @@ const data = [
     gender: "male",
     role: "admin",
     avatar_url: "",
-    product: {
-      create: [
-        {
-          id: 1,
-          product_name: "GOKVÄLLÅ",
-          image_url:
-            "https://www.ikea.co.id/dairyfarm/id/images/244/1224454_PE914963_S4.jpg",
-          price: 69900,
-          description: "",
-        },
-        {
-          id: 2,
-          product_name: "GLASIG",
-          image_url:
-            "https://www.ikea.co.id/dairyfarm/id/images/374/0637479_PE698309_S4.jpg",
-          price: 19900,
-          description: "",
-        },
-        {
-          id: 3,
-          product_name: "ADLAD",
-          image_url:
-            "https://www.ikea.co.id/dairyfarm/id/images/602/1060247_PE849857_S4.jpg",
-          price: 14900,
-          description: "",
-        },
-        {
-          id: 4,
-          product_name: "SLIPSKIVA",
-          image_url:
-            "https://www.ikea.co.id/dairyfarm/id/images/285/1128531_PE876613_S4.jpg",
-          price: 99900,
-          description: "",
-        },
-        {
-          id: 5,
-          product_name: "BINTJE",
-          image_url:
-            "https://www.ikea.co.id/dairyfarm/id/images/388/0638860_PE699222_S4.jpg",
-          price: 10000,
-          description: "",
-        },
-      ],
-    },
+    // product: {
+    //   create: [
+    //     {
+    //       id: 1,
+    //       name: "GOKVÄLLÅ",
+    //       image_url:
+    //         "https://www.ikea.co.id/dairyfarm/id/images/244/1224454_PE914963_S4.jpg",
+    //       price: 69900,
+    //       description: "",
+    //       // categories: {
+    //       //   create: {
+    //       //     id: 1,
+    //       //     category_name: "boneka",
+    //       //   },
+    //       // },
+    //     },
+
+    //     // {
+    //     //   id: 2,
+    //     //   product_name: "GLASIG",
+    //     //   image_url:
+    //     //     "https://www.ikea.co.id/dairyfarm/id/images/374/0637479_PE698309_S4.jpg",
+    //     //   price: 19900,
+    //     //   description: "",
+    //     // },
+    //     // {
+    //     //   id: 3,
+    //     //   product_name: "ADLAD",
+    //     //   image_url:
+    //     //     "https://www.ikea.co.id/dairyfarm/id/images/602/1060247_PE849857_S4.jpg",
+    //     //   price: 14900,
+    //     //   description: "",
+    //     // },
+    //     // {
+    //     //   id: 4,
+    //     //   product_name: "SLIPSKIVA",
+    //     //   image_url:
+    //     //     "https://www.ikea.co.id/dairyfarm/id/images/285/1128531_PE876613_S4.jpg",
+    //     //   price: 99900,
+    //     //   description: "",
+    //     // },
+    //     // {
+    //     //   id: 5,
+    //     //   product_name: "BINTJE",
+    //     //   image_url:
+    //     //     "https://www.ikea.co.id/dairyfarm/id/images/388/0638860_PE699222_S4.jpg",
+    //     //   price: 10000,
+    //     //   description: "",
+    //     // },
+    //   ],
+    // },
   },
 ];
 
+const category = [
+  {
+    id: 1,
+    category_name: "boneka",
+  },
+];
+
+const products = [
+  {
+    id: 1,
+    name: "GOKVÄLLÅ",
+    image_url:
+      "https://www.ikea.co.id/dairyfarm/id/images/244/1224454_PE914963_S4.jpg",
+    price: 69900,
+    description: "",
+    category_id: 1,
+  },
+
+  {
+    id: 2,
+    product_name: "GLASIG",
+    image_url:
+      "https://www.ikea.co.id/dairyfarm/id/images/374/0637479_PE698309_S4.jpg",
+    price: 19900,
+    description: "",
+    category_id: 1,
+  },
+  {
+    id: 3,
+    product_name: "ADLAD",
+    image_url:
+      "https://www.ikea.co.id/dairyfarm/id/images/602/1060247_PE849857_S4.jpg",
+    price: 14900,
+    description: "",
+    category_id: 1,
+  },
+  {
+    id: 4,
+    product_name: "SLIPSKIVA",
+    image_url:
+      "https://www.ikea.co.id/dairyfarm/id/images/285/1128531_PE876613_S4.jpg",
+    price: 99900,
+    description: "",
+    category_id: 1,
+  },
+  {
+    id: 5,
+    product_name: "BINTJE",
+    image_url:
+      "https://www.ikea.co.id/dairyfarm/id/images/388/0638860_PE699222_S4.jpg",
+    price: 10000,
+    description: "",
+    category_id: 1,
+  },
+];
 async function main() {
   try {
-    data.map(async (user) => {
-      const newUser = await prisma.user.create({
-        data: user,
+    // data.map(async (user) => {
+    //   const newUser = await prisma.user.create({
+    //     data: user,
+    //   });
+    //   console.log(`Created user with id: ${newUser.id}`);
+    // });
+    category.map(async (c) => {
+      await prisma.category.create({
+        data: c,
       });
-      console.log(`Created user with id: ${newUser.id}`);
+      // console.log(`Created user with id: ${newUser.id}`);
     });
+    // products.map(async (products) => {
+    //   await prisma.product.create({
+    //     data: products,
+    //   });
+    // });
     console.log(`Seeding finished.`);
   } catch (error) {
     console.log(error);
