@@ -82,7 +82,8 @@ function NavbarComponent() {
                 height={30}
                 className="rounded-full"
               /> */}
-              Welcome, {userSelector?.firstName + " " + userSelector?.lastName}
+              Welcome,{" "}
+              {userSelector?.first_name + " " + userSelector?.last_name}
             </div>
             <button
               // style={{ color: `${textColor}` }}
