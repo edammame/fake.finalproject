@@ -52,7 +52,7 @@ export const handlePaymentProofUpload = async (req: Request, res: Response) => {
           res.status(500).json({
             success: false,
             message: "Failed to update the order with payment proof",
-            error: error.message,
+            error: error,
           });
         }
       }

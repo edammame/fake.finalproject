@@ -3,8 +3,17 @@ import { prisma } from "..";
 
 export async function addToCart(req: Request, res: Response): Promise<void> {
   const { userId, productId, qty } = req.body;
+  console.log('test', req.body);
+  
 
   try {
+    const userExists = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!userExists) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
     const cartItem = await prisma.cart.upsert({
       where: {
         user_id_product_id: {
@@ -25,6 +34,7 @@ export async function addToCart(req: Request, res: Response): Promise<void> {
     });
     res.json(cartItem);
   } catch (error) {
+    console.error("Error adding to cart:", error);
     res.status(500).json({ error: "Unable to add products to cart" });
   }
 }
