@@ -1,78 +1,26 @@
-"use client";
-import {
-  Card,
-  Typography,
-  List,
-  ListItem,
-  ListItemPrefix,
-  ListItemSuffix,
-  Chip,
-} from "@material-tailwind/react";
-import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-} from "@heroicons/react/24/solid";
+import { HiArrowDown, HiArrowLongDown, HiArrowUp } from "react-icons/hi2";
 
-function DefaultSidebar() {
+function DashboardPage() {
   return (
-    <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-      <div className="mb-2 p-4">
-        <Typography variant="h5" color="blue-gray">
-          Sidebar
-        </Typography>
+    <main>
+      <div className=" flex items-center">
+        <div className="h-[250px] w-[350px] shadow-md ml-10">
+          <span className="flex font-semibold items-center justify-center text-xl cursor-pointer mt-10 text-[#555]">
+            Users
+          </span>
+          <div className="flex item-center justify-center mt-3">
+            <span className=" font-semibold">10</span>
+          </div>
+          <div className="flex items-center justify-center mt-3">
+            <HiArrowUp className="text-3xl text-green-700" />
+            <HiArrowLongDown className="text-3xl text-red-700" />
+          </div>
+          <div className="flex items-center justify-center mt-3">
+            <span className="font-semibold"> Compared to the last month</span>
+          </div>
+        </div>
       </div>
-      <List>
-        <ListItem>
-          <ListItemPrefix>
-            <PresentationChartBarIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Dashboard
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <ShoppingBagIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Users
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <InboxIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Inbox
-          <ListItemSuffix>
-            <Chip
-              value="14"
-              size="sm"
-              variant="ghost"
-              color="blue-gray"
-              className="rounded-full"
-            />
-          </ListItemSuffix>
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <UserCircleIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Profile
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <Cog6ToothIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Settings
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <PowerIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Log Out
-        </ListItem>
-      </List>
-    </Card>
+    </main>
   );
 }
-export default DefaultSidebar;
+export default DashboardPage;
