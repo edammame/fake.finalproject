@@ -52,7 +52,7 @@ model User {
 
 model Category {
   id Int @id @default(autoincrement())
-  name String
+  category_name String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
   product Product[]
@@ -65,7 +65,7 @@ model Product {
   user_id Int 
   user User @relation(fields:[user_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
   image_url String @db.VarChar(255)
-  name String
+  product_name String
   description String? @db.VarChar(255)
   price Decimal @db.Decimal(8,2)
   created_at DateTime @default(now())
@@ -84,12 +84,13 @@ model Warehouse {
   city City @relation(fields:[city_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
   province_id Int
   province Province @relation(fields:[province_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
-  name String
+  warehouse_name String
   longtitude String
   latitude String
   location String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
+  deleted_at DateTime?
   stocks Stock[]
   origin StockMutation[] @relation("FromWarehouse")
   destination StockMutation[] @relation("ToWarehouse")
