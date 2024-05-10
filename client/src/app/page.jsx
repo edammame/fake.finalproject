@@ -1,5 +1,10 @@
 import ProductList from "@/components/productList";
 
+export const metadata = {
+  title: "Jakarta Warehouse Project",
+  description: "Multi Warehouse E-commerce",
+};
+
 export default function Home() {
   return (
     <>

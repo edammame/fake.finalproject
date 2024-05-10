@@ -12,12 +12,38 @@ import {
 } from "@material-tailwind/react";
 import Pagination from "./pagination";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { axiosInstance } from "@/axios/axios";
 
 function ProductList() {
+  const [products, setProducts] = useState([]);
+  const productSearch = useSelector((state) => state.product);
+
+  const fetchProducts = () => {
+    axiosInstance()
+      .get("/products/", {
+        params: {
+          name: productSearch.name,
+        },
+      })
+      .then((res) => {
+        setProducts(res.data.result);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, [productSearch]);
+
   return (
     <>
       <div className=" grid max-w-screen-2xl md:grid-cols-4 grid-cols-1 p-7 gap-3 mx-28 ">
-        <ProductCard />
+        {products.map((product, key) => (
+          <ProductCard {...product} key={key} />
+        ))}
+
         {/* buat looping disini */}
       </div>
       <div className=" flex items-center justify-center">
@@ -28,14 +54,15 @@ function ProductList() {
 }
 export default ProductList;
 
-export function ProductCard() {
+export function ProductCard({ name, image_url, description, price, id }) {
   return (
     <>
-      <Link href={"/product"}>
+      <Link href={"/products/" + id}>
         <Card className=" w-72 hover:scale-105">
           <CardHeader shadow={false} floated={false} className="">
-            <Image
-              src={product1}
+            <img
+              // src={process.env.API_URL + image_url} kalo udah ada multer
+              src={image_url}
               alt="card-image"
               className="h-full w-full object-contain"
             />
@@ -45,7 +72,7 @@ export function ProductCard() {
               color="blue-gray"
               className=" font-extrabold text-[#1e2b62] text-lg"
             >
-              AFTONSPARV
+              {name}
             </Typography>
 
             <Typography
@@ -53,14 +80,15 @@ export function ProductCard() {
               color="gray"
               className="font-normal opacity-75 text-[#222831]"
             >
-              Set boneka jari 5 buah, aneka warna
+              {description}
             </Typography>
             {/* tambahin short description di db? */}
             <Typography
               color="blue-gray"
               className="font-semibold pt-3 text-lg"
             >
-              <sup className=" text-xs p-0.5">Rp</sup>29.000
+              <sup className=" text-xs p-0.5">Rp</sup>
+              {Number(price).toLocaleString("id-ID")}
             </Typography>
             <div className=" py-3">
               <Button

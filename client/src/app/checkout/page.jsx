@@ -1,5 +1,5 @@
 import AddressComponents from "./address";
-import ShippingComponents from "./shippingmethos";
+import ShippingComponents from "./shippingmethod";
 
 function Checkout() {
   return (

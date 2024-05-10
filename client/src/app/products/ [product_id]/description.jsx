@@ -1,3 +1,4 @@
+"use client";
 import {
   Tabs,
   TabsHeader,
@@ -6,22 +7,30 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function Description() {
   const [activeTab, setActiveTab] = useState("html");
-  const data = [
-    {
-      label: "Product Details",
-      value: "html",
-      desc: `Ini nanti diganti pake axios, jadi ngefetch data dari database. Sementara begini dulu karena seedingnya masih gabisa, jd data dummynya masih blm ada hiks`,
-    },
-    {
-      label: "Stock Information",
-      value: "react",
-      desc: `diisi stock dengan cara ngeget stock, nanti akan ketauan qty brp di warehouse mana aja.
-      sebenernya ini agak ikutin loket.com, product detailnya supaya ga polos bgt ada animasi dikit`,
-    },
-  ];
+  const [desc, setDesc] = useState([]);
+  const productSearch = useSelector((state) => state.product);
+
+  const fetchProduct = () => {
+    axiosInstance()
+      .get("/products/", {
+        params: {
+          description: productSearch.description,
+        },
+      })
+      .then((res) => {
+        setDesc(res.data.result);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchProduct();
+  }, [productSearch]);
+
   return (
     <>
       <Tabs value={activeTab} className=" max-w-[60%]">
@@ -32,14 +41,14 @@ function Description() {
               "bg-transparent border-b-2 border-gray-900 shadow-none rounded-none",
           }}
         >
-          {data.map(({ label, value }) => (
+          {desc.map((desc, key) => (
             <Tab
-              key={value}
-              value={value}
+              key={key}
+              {...desc}
               onClick={() => setActiveTab(value)}
               className={activeTab === value ? "text-gray-900" : ""}
             >
-              {label}
+              {desc}
             </Tab>
           ))}
         </TabsHeader>
