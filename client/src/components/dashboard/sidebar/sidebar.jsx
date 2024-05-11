@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { functionLogout } from "@/redux/slices/userSlice";
 import Link from "next/link";
 
-function Sidebar() {
+function SidebarPage() {
   const userSelector = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const logout = () => {
@@ -28,7 +28,7 @@ function Sidebar() {
   };
 
   return (
-    <Card className="h-[100vh] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+    <Card className="h-[100vh] w-full max-w-[20rem] p-4 shadow-2xl">
       <div className="mb-2 p-4">
         <Typography variant="h5" color="blue-gray">
           {userSelector?.first_name + " " + userSelector?.last_name}
@@ -67,4 +67,4 @@ function Sidebar() {
     </Card>
   );
 }
-export default Sidebar;
+export default SidebarPage;

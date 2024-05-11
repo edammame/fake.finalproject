@@ -1,9 +1,10 @@
 import { HiArrowDown, HiArrowLongDown, HiArrowUp } from "react-icons/hi2";
+import NavbarPage from "@/components/dashboard/navbar/navbar";
 
 function DashboardPage() {
   return (
     <main>
-      <div className=" flex items-center">
+      <div className=" flex items-center mt-3">
         <div className="h-[250px] w-[350px] shadow-md ml-10">
           <span className="flex font-semibold items-center justify-center text-xl cursor-pointer mt-10 text-[#555]">
             Users
