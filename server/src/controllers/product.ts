@@ -168,7 +168,7 @@ export const productController = {
 
       const newProduct: Prisma.ProductCreateInput = {
         product_name,
-        image_url: String(req.file?.fieldname),
+        image_url: String(req.file?.filename),
         price,
         description,
         categories: {
@@ -178,7 +178,7 @@ export const productController = {
         },
         user: {
           connect: {
-            id: 1,
+            id: req.user?.id,
           },
         },
       };

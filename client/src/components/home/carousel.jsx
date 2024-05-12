@@ -4,7 +4,7 @@ import { Carousel } from "@material-tailwind/react";
 function CarouselComponent() {
   return (
     <>
-      <main className="flex justify-center  mx-20">
+      <main className="flex justify-center mt-8 mx-20">
         <Carousel
           transition={{ duration: 1 }}
           autoplay

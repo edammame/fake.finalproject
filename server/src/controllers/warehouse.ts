@@ -155,21 +155,21 @@ export const warehouseController = {
       next(error);
     }
   },
-  // async deleteWarehouse(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const warehouseid 
-  //     await prisma.warehouse.update({
-  //       data: warehouseid
-  //       where: { 
-          
-  //       },
-  //     });
-  //     res.send({
-  //       success: true,
-  //       message: "SOFT DELETED",
-  //     });
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // },
+  async deleteWarehouse(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data: Prisma.WarehouseUncheckedUpdateInput = {
+        deleted_at: new Date(),
+      };
+      await prisma.warehouse.update({
+        data: data,
+        where: { id: Number(req.params.id) },
+      });
+      res.send({
+        success: true,
+        message: "SOFT DELETED",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
