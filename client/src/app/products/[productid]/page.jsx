@@ -3,7 +3,7 @@ import Image from "next/image";
 import Description from "./description";
 import { GoPlus } from "react-icons/go";
 import { HiMinus } from "react-icons/hi2";
-import { useState } from "react";
+// import { useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import { TbTruckDelivery } from "react-icons/tb";
 import { FaShop } from "react-icons/fa6";
@@ -16,33 +16,36 @@ export const metadata = {
 };
 
 async function Page({ params }) {
-  const [qty, setQty] = useState(1);
+  // const [qty, setQty] = useState(1);
 
-  const { product_id } = params;
+  const { productid } = params;
 
-  const product = (await axiosInstanceSSR().get("/products/" + product_id)).data
+  const product = (await axiosInstanceSSR().get("/products/" + productid)).data
     .result;
+  console.log(product);
 
-  const next = () => {
-    if (qty === 10) return;
+  // const next = () => {
+  //   if (qty === 10) return;
 
-    setQty(qty + 1);
-  };
+  //   setQty(qty + 1);
+  // };
 
-  const prev = () => {
-    if (qty === 1) return;
+  // const prev = () => {
+  //   if (qty === 1) return;
 
-    setQty(qty - 1);
-  };
+  //   setQty(qty - 1);
+  // };
 
   return (
     <>
       <div className=" mx-40 pt-10 ">
         <div className=" flex">
           <div className=" w-[60%]">
-            <Image
+            <img
               // src={process.env.API_URL + product.image_url} kalo ada multer
               src={product.image_url}
+              // width={100}
+              // height={100}
               className=" m-auto w-[70%] object-contain rounded-lg"
             />
           </div>
@@ -65,7 +68,7 @@ async function Page({ params }) {
               <div className=" font-medium">Enter the product quantity</div>
               <div className=" flex gap-4 justify-between items-center">
                 <div>Quantity :</div>
-                <div className=" flex gap-5 rounded-xl border px-2 py-1">
+                {/* <div className=" flex gap-5 rounded-xl border px-2 py-1">
                   <button onClick={prev} product={product} qty={qty}>
                     <HiMinus />
                   </button>
@@ -74,7 +77,7 @@ async function Page({ params }) {
                   <button onClick={next}>
                     <GoPlus />
                   </button>
-                </div>
+                </div> */}
               </div>
               <button className=" flex gap-2 justify-center items-center bg-[#1e2b62] text-white rounded-2xl py-2">
                 Add to Cart <FaCartShopping className="text-white" />
@@ -107,9 +110,7 @@ async function Page({ params }) {
             </div>
           </div>
         </div>
-        <div>
-          <Description />
-        </div>
+        <div>{/* <Description /> */}</div>
       </div>
     </>
   );

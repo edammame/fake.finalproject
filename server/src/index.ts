@@ -22,6 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //routes
 app.use("/products", routes.productsRoutes);
+app.use("/address", routes.addressRoutes);
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send({ message: error.message || "internal server error" });

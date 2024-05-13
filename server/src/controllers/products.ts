@@ -5,10 +5,9 @@ import { prisma } from "..";
 export const productsController = {
   async getProducts(req: Request, res: Response, next: NextFunction) {
     try {
-      const { name } = req.query;
-      // const whereCategory = {} as Prisma.CategoryWhereInput;
-      // if (categories) whereCategory.id = Number(categories);
-      // const product = product_name as Prisma.ProductWhereInput;
+      const { name, categories } = req.query;
+      const whereCategory = {} as Prisma.CategoryWhereInput;
+      if (categories) whereCategory.id = Number(categories);
       const products = await prisma.product.findMany({
         include: {
           user: {
@@ -19,13 +18,18 @@ export const productsController = {
               last_name: true,
             },
           },
-          // categories: true,
+          categories: {
+            select: {
+              id: true,
+              category_name: true,
+            },
+          },
         },
         where: {
           name: {
             contains: String(name),
           },
-          // categories: { ...whereCategory },
+          categories: { ...whereCategory },
         },
       });
 
