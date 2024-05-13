@@ -9,7 +9,7 @@ export default function RootLayout({ children }) {
       <div>
         <SidebarPage />
       </div>
-      <div>
+      <div className="">
         <NavbarPage />
         {children}
       </div>
