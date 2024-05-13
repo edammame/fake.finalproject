@@ -5,14 +5,14 @@ import UsersPage from "./users/page";
 
 export default function RootLayout({ children }) {
   return (
-    <main className="flex gap-3">
-      <div>
+    <div className="flex gap-3 w-full">
+      <div className="flex-shrink-0">
         <SidebarPage />
       </div>
-      <div className="">
+      <div className="flex-grow">
         <NavbarPage />
         {children}
       </div>
-    </main>
+    </div>
   );
 }

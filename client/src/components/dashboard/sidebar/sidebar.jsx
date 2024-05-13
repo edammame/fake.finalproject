@@ -28,42 +28,44 @@ function SidebarPage() {
   };
 
   return (
-    <Card className="h-[100vh] w-full max-w-[20rem] p-4 shadow-2xl">
-      <div className="mb-2 p-4">
-        <Typography variant="h5" color="blue-gray">
-          {userSelector?.first_name + " " + userSelector?.last_name}
-        </Typography>
+    <Card className=" min-h-[100vh] w-full max-w-[20rem] p-4 shadow-2xl">
+      <div className=" sticky top-0">
+        <div className=" mb-2 p-4">
+          <Typography variant="h5" color="blue-gray">
+            {userSelector?.first_name + " " + userSelector?.last_name}
+          </Typography>
+        </div>
+        <List>
+          <Link href="/admin/dashboard">
+            <ListItem>
+              <ListItemPrefix>
+                <PresentationChartBarIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              Dashboard
+            </ListItem>
+          </Link>
+          <Link href="/admin/dashboard/users">
+            <ListItem>
+              <ListItemPrefix>
+                <UserCircleIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              Users
+            </ListItem>
+          </Link>
+          <ListItem>
+            <ListItemPrefix>
+              <Cog6ToothIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Settings
+          </ListItem>
+          <ListItem onClick={logout}>
+            <ListItemPrefix>
+              <PowerIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Log Out
+          </ListItem>
+        </List>
       </div>
-      <List>
-        <Link href="/admin/dashboard">
-          <ListItem>
-            <ListItemPrefix>
-              <PresentationChartBarIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Dashboard
-          </ListItem>
-        </Link>
-        <Link href="/admin/dashboard/users">
-          <ListItem>
-            <ListItemPrefix>
-              <UserCircleIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Users
-          </ListItem>
-        </Link>
-        <ListItem>
-          <ListItemPrefix>
-            <Cog6ToothIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Settings
-        </ListItem>
-        <ListItem onClick={logout}>
-          <ListItemPrefix>
-            <PowerIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Log Out
-        </ListItem>
-      </List>
     </Card>
   );
 }
