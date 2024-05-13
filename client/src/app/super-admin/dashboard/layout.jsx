@@ -1,7 +1,5 @@
-import SidebarPage from "@/components/dashboard/sidebar/adminsidebar";
+import SidebarPage from "@/components/dashboard/sidebar/superadminsidebar";
 import NavbarPage from "@/components/dashboard/navbar/navbar";
-import { Navbar } from "flowbite-react";
-import UsersPage from "./users/page";
 
 export default function RootLayout({ children }) {
   return (

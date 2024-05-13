@@ -52,12 +52,12 @@ function SidebarPage() {
               Users
             </ListItem>
           </Link>
-          <ListItem>
+          {/* <ListItem>
             <ListItemPrefix>
               <Cog6ToothIcon className="h-5 w-5" />
             </ListItemPrefix>
             Settings
-          </ListItem>
+          </ListItem> */}
           <ListItem onClick={logout}>
             <ListItemPrefix>
               <PowerIcon className="h-5 w-5" />
