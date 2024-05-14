@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "..";
+import { genSalt, hash } from "bcrypt";
 
 export const manageUserController = {
   async getAllUsers(req: Request, res: Response, next: NextFunction) {
@@ -46,16 +47,25 @@ export const manageUserController = {
   async createUser(req: Request, res: Response, next: NextFunction) {
     try {
       const { first_name, last_name, email, password, gender, role } = req.body;
+      const salt = await genSalt(10);
+
+      const hashedPassword = await hash(password, salt);
+
       const newUser = await prisma.user.create({
         data: {
           first_name,
           last_name,
           email,
-          password,
+          password: hashedPassword,
           gender,
           role,
         },
       });
+
+      await prisma.user.create({
+        data: newUser,
+      });
+
       res.status(201).send("User created successfully");
     } catch (error) {
       res.status(500).send("Error creating user");

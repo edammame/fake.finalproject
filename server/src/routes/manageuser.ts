@@ -1,7 +1,7 @@
 /** @format */
 
 import express, { Router } from "express";
-import { manageUserController } from "../controllers/manageusers";
+import { manageUserController } from "../controllers/manageuser";
 import { verifyAdmin, verifyUser } from "../middlewares/auth-middleware";
 
 export const route: Router = express.Router();

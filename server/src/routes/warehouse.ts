@@ -1,7 +1,7 @@
 /** @format */
 
 import express, { Router } from "express";
-import { warehouseController } from "../controllers/warehouses";
+import { warehouseController } from "../controllers/warehouse";
 import { verifysuperAdmin, verifyUser } from "../middlewares/auth-middleware";
 
 export const route: Router = express.Router();
