@@ -22,6 +22,7 @@ const PORT = process.env.PORT;
 
 //routes
 app.use("/users", routes.userRoutes);
+app.use("/warehouses", routes.warehousesRoutes);
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send({ message: error.message || "internal server error" });
