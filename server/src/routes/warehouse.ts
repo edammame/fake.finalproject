@@ -27,7 +27,7 @@ export const route: Router = express.Router();
 // );
 
 route.post(
-  "/warehouses",
+  "/",
   verifyUser,
   verifysuperAdmin,
   warehouseController.assignWarehouseAdmin
