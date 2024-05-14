@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction } from "express";
-import { prisma, secretKey } from ".."; //accessing model
-import { Prisma } from "@prisma/client"; // accessing interface/types
+import { prisma, secretKey } from "..";
+import { Prisma } from "@prisma/client";
 
 import { genSalt, hash, compare } from "bcrypt";
 import { sign, verify } from "jsonwebtoken";
@@ -94,7 +94,7 @@ export const userController = {
         last_name: user.last_name,
         gender: user.gender,
         role: user.role,
-        avatarUrl: String(req.file?.filename),
+        // avatarUrl: String(req.file?.filename),
       };
       if (checkPassword) {
         const token = sign(resUser, secretKey, {
