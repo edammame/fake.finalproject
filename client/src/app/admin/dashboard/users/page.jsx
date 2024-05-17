@@ -44,7 +44,7 @@ const TABLE_ROWS = [
     email: "john@creative-tim.com",
     job: "Manager",
     org: "Organization",
-    online: true,
+    active: true,
     date: "23/04/18",
   },
   {
@@ -53,7 +53,7 @@ const TABLE_ROWS = [
     email: "alexa@creative-tim.com",
     job: "Programator",
     org: "Developer",
-    online: false,
+    active: false,
     date: "23/04/18",
   },
   {
@@ -62,7 +62,7 @@ const TABLE_ROWS = [
     email: "laurent@creative-tim.com",
     job: "Executive",
     org: "Projects",
-    online: false,
+    active: false,
     date: "19/09/17",
   },
   {
@@ -71,7 +71,7 @@ const TABLE_ROWS = [
     email: "michael@creative-tim.com",
     job: "Programator",
     org: "Developer",
-    online: true,
+    active: true,
     date: "24/12/08",
   },
   {
@@ -80,7 +80,7 @@ const TABLE_ROWS = [
     email: "richard@creative-tim.com",
     job: "Manager",
     org: "Executive",
-    online: false,
+    active: false,
     date: "04/10/21",
   },
 ];
@@ -144,7 +144,7 @@ function UsersPage() {
           </thead>
           <tbody>
             {TABLE_ROWS.map(
-              ({ img, name, email, job, org, online, date }, index) => {
+              ({ img, name, email, job, org, active, date }, index) => {
                 const isLast = index === TABLE_ROWS.length - 1;
                 const classes = isLast
                   ? "p-4"
@@ -196,8 +196,8 @@ function UsersPage() {
                         <Chip
                           variant="ghost"
                           size="sm"
-                          value={online ? "online" : "offline"}
-                          color={online ? "green" : "blue-gray"}
+                          value={active ? "active" : "inactive"}
+                          color={active ? "green" : "blue-gray"}
                         />
                       </div>
                     </td>
