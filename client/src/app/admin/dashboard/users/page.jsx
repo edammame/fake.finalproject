@@ -35,53 +35,28 @@ const TABS = [
   },
 ];
 
-const TABLE_HEAD = ["User", "Role", "Status", "CreateAt", "", ""];
+const TABLE_HEAD = ["Id", "User", "Role", "Status", "Verified", "", ""];
 
 const TABLE_ROWS = [
   {
+    id: 1,
     img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
     name: "John Michael",
     email: "john@creative-tim.com",
     job: "Manager",
     org: "Organization",
     active: true,
-    date: "23/04/18",
+    verified: true,
   },
   {
+    id: 2,
     img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
     name: "Alexa Liras",
     email: "alexa@creative-tim.com",
     job: "Programator",
     org: "Developer",
     active: false,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
-    name: "Laurent Perrier",
-    email: "laurent@creative-tim.com",
-    job: "Executive",
-    org: "Projects",
-    active: false,
-    date: "19/09/17",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-    name: "Michael Levi",
-    email: "michael@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    active: true,
-    date: "24/12/08",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-    name: "Richard Gran",
-    email: "richard@creative-tim.com",
-    job: "Manager",
-    org: "Executive",
-    active: false,
-    date: "04/10/21",
+    verified: true,
   },
 ];
 
@@ -144,7 +119,7 @@ function UsersPage() {
           </thead>
           <tbody>
             {TABLE_ROWS.map(
-              ({ img, name, email, job, org, active, date }, index) => {
+              ({ id, img, name, email, job, org, active, verified }, index) => {
                 const isLast = index === TABLE_ROWS.length - 1;
                 const classes = isLast
                   ? "p-4"
@@ -152,6 +127,15 @@ function UsersPage() {
 
                 return (
                   <tr key={name}>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {id}
+                      </Typography>
+                    </td>
                     <td className={classes}>
                       <div className="flex items-center gap-3">
                         <Avatar src={img} alt={name} size="sm" />
@@ -202,13 +186,14 @@ function UsersPage() {
                       </div>
                     </td>
                     <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {date}
-                      </Typography>
+                      <div className="w-max">
+                        <Chip
+                          variant="ghost"
+                          size="sm"
+                          value={verified ? "verified" : "not verified"}
+                          color={verified ? "green" : "blue-gray"}
+                        />
+                      </div>
                     </td>
                     <td className={classes}>
                       <Tooltip content="Edit User">
