@@ -69,16 +69,14 @@ export const manageUserController = {
 
       const hashedPassword = await hash(password, salt);
 
-      const newUser = await prisma.user.create({
-        data: {
-          first_name,
-          last_name,
-          email,
-          password: hashedPassword,
-          gender,
-          role,
-        },
-      });
+      const newUser: Prisma.UserCreateInput = {
+        email,
+        password: hashedPassword,
+        first_name,
+        last_name,
+        gender,
+        role,
+      };
 
       const checkUser = await prisma.user.findUnique({
         where: {
@@ -117,17 +115,23 @@ export const manageUserController = {
   async updateUser(req: Request, res: Response, next: NextFunction) {
     try {
       const { first_name, last_name, email, gender, role, password } = req.body;
-      const updatedUser = await prisma.user.update({
+      const salt = await genSalt(10);
+
+      const hashedPassword = await hash(password, salt);
+
+      const updateUser: Prisma.UserUpdateInput = {
+        first_name,
+        last_name,
+        password: hashedPassword,
+        email,
+        gender,
+        role,
+      };
+      await prisma.user.update({
+        data: updateUser,
         where: { id: Number(req.params.id) },
-        data: {
-          first_name,
-          last_name,
-          password,
-          email,
-          gender,
-          role,
-        },
       });
+
       res.status(200).send("User updated successfully");
     } catch (error) {
       res.status(500).send("Error updating user");
@@ -136,11 +140,8 @@ export const manageUserController = {
 
   async deleteUser(req: Request, res: Response, next: NextFunction) {
     try {
-      await prisma.user.update({
+      await prisma.user.delete({
         where: { id: Number(req.params.id) },
-        data: {
-          is_verified: true,
-        },
       });
       res.status(200).send("User deleted successfully");
     } catch (error) {
@@ -148,31 +149,6 @@ export const manageUserController = {
     }
   },
 
-  async forgotPassword(req: ReqUser, res: Response, next: NextFunction) {
-    try {
-      const { password, email } = req.body;
-      console.log(req.user);
-
-      const salt = await genSalt(10);
-
-      const hashedPassword = await hash(password, salt);
-      const userEditPassword: Prisma.UserUpdateInput = {
-        password: hashedPassword,
-      };
-      await prisma.user.update({
-        data: userEditPassword,
-        where: {
-          email: String(req.user?.email),
-        },
-      });
-      res.send({
-        success: true,
-        message: "successfully changed the password",
-      });
-    } catch (error) {
-      next(error);
-    }
-  },
   async keepLogin(req: Request, res: Response, next: NextFunction) {
     try {
       const { authorization } = req.headers;
@@ -207,6 +183,7 @@ export const manageUserController = {
       next(error);
     }
   },
+
   async sendMail(req: Request, res: Response, next: NextFunction) {
     try {
       const { email } = req.query;
