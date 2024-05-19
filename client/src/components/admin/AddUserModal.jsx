@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogHeader,
@@ -19,6 +19,19 @@ const AddUserModal = ({ open, handleOpen, addUser }) => {
     gender: "",
     role: "",
   });
+
+  useEffect(() => {
+    if (!open) {
+      setFormData({
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        gender: "",
+        role: "",
+      });
+    }
+  }, [open]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -66,8 +79,8 @@ const AddUserModal = ({ open, handleOpen, addUser }) => {
             value={formData.gender}
             onChange={(e) => setFormData({ ...formData, gender: e })}
           >
-            <Option value="Male">Male</Option>
-            <Option value="Female">Female</Option>
+            <Option value="male">Male</Option>
+            <Option value="female">Female</Option>
           </Select>
           <Select
             label="Role"
@@ -75,9 +88,9 @@ const AddUserModal = ({ open, handleOpen, addUser }) => {
             value={formData.role}
             onChange={(e) => setFormData({ ...formData, role: e })}
           >
-            <Option value="User">User</Option>
-            <Option value="Admin">Admin</Option>
-            <Option value="Super Admin">Super Admin</Option>
+            <Option value="user">User</Option>
+            <Option value="admin">Admin</Option>
+            <Option value="superAdmin">Super Admin</Option>
           </Select>
         </div>
       </DialogBody>
