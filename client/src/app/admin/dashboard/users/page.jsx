@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserTable from "@/components/admin/UserTable";
+import { axiosInstance } from "@/axios/axios";
 
 function UsersPage() {
   const [users, setUsers] = useState([]);
@@ -13,11 +14,7 @@ function UsersPage() {
 
   async function fetchUsers() {
     try {
-      const response = await axios.get("http://localhost:8000/manageusers", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Adjust based on your auth setup
-        },
-      });
+      const response = await axiosInstance().get("/manageusers/");
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -26,45 +23,29 @@ function UsersPage() {
 
   async function addUser(userData) {
     try {
-      await axios.post("http://localhost:8000/manageusers", userData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Adjust based on your auth setup
-        },
-      });
+      await axiosInstance().post("/manageusers/", userData);
       fetchUsers();
     } catch (error) {
       console.error("Error adding user:", error);
     }
   }
 
-  async function editUser(userId, userData) {
+  async function editUser(user_id, userData) {
     try {
       const updatedData = { ...userData };
       if (!userData.password) {
         delete updatedData.password;
       }
-      await axios.put(
-        `http://localhost:8000/manageusers/${userId}`,
-        updatedData,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // Adjust based on your auth setup
-          },
-        }
-      );
+      await axiosInstance().patch(`/manageusers/${user_id}`, updatedData);
       fetchUsers();
     } catch (error) {
       console.error("Error editing user:", error);
     }
   }
 
-  async function deleteUser(userId) {
+  async function deleteUser(user_id) {
     try {
-      await axios.delete(`http://localhost:8000/manageusers/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Adjust based on your auth setup
-        },
-      });
+      await axiosInstance().delete(`/manageusers/${user_id}`);
       fetchUsers();
     } catch (error) {
       console.error("Error deleting user:", error);
