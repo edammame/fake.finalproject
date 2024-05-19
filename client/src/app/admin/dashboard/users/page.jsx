@@ -3,14 +3,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserTable from "@/components/admin/UserTable";
 import { axiosInstance } from "@/axios/axios";
+import { useDebounce } from "use-debounce";
 
 function UsersPage() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
+  const [value] = useDebounce(search, 500);
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [value]);
 
   async function fetchUsers() {
     try {
