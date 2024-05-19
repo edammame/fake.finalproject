@@ -62,7 +62,7 @@ export const manageUserController = {
     }
   },
 
-  async createUser(req: Request, res: Response, next: NextFunction) {
+  async addUser(req: Request, res: Response, next: NextFunction) {
     try {
       const { first_name, last_name, email, password, gender, role } = req.body;
       const salt = await genSalt(10);
@@ -112,7 +112,7 @@ export const manageUserController = {
     }
   },
 
-  async updateUser(req: Request, res: Response, next: NextFunction) {
+  async editUser(req: Request, res: Response, next: NextFunction) {
     try {
       const { first_name, last_name, email, gender, role, password } = req.body;
       const salt = await genSalt(10);
