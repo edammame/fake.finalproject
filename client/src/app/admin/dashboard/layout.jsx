@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
         <SidebarPage />
       </div>
       <div className="flex-grow">
-        <NavbarPage />
+        {/* <NavbarPage /> */}
         {children}
       </div>
     </div>
