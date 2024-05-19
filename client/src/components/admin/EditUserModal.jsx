@@ -16,8 +16,8 @@ const EditUserModal = ({ open, handleOpen, editUser, user }) => {
     last_name: "",
     email: "",
     password: "",
-    gender: "male",
-    role: "user",
+    gender: "",
+    role: "",
   });
 
   useEffect(() => {

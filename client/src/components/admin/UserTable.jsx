@@ -39,7 +39,7 @@ import { useDebounce } from "use-debounce";
 //   },
 // ];
 
-const TABLE_HEAD = ["Id", "User", "Role", "Verified", "", ""];
+const TABLE_HEAD = ["Id", "User", "Role", "Gender", "Verified", "", ""];
 
 const UserTable = ({
   users,
@@ -199,6 +199,15 @@ const UserTable = ({
                         </Typography>
                       </td>
                       <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {gender}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
                         <Chip
                           variant="ghost"
                           size="sm"
@@ -219,6 +228,7 @@ const UserTable = ({
                                 password,
                                 role,
                                 is_verified,
+                                gender,
                               })
                             }
                           >
