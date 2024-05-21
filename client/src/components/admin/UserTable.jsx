@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
@@ -9,35 +9,12 @@ import {
   Typography,
   Button,
   CardBody,
-  Chip,
   CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
 } from "@material-tailwind/react";
-import { AiFillDelete } from "react-icons/ai";
 import AddUserModal from "./AddUserModal";
 import EditUserModal from "./EditUserModal";
 import DeleteUserModal from "./DeleteUserModal";
-import { useDebounce } from "use-debounce";
-
-// const TABS = [
-//   {
-//     label: "All",
-//     value: "all",
-//   },
-//   {
-//     label: "Active",
-//     value: "active",
-//   },
-//   {
-//     label: "Inactive",
-//     value: "inactive",
-//   },
-// ];
+import UserTableRow from "./UserTableRow";
 
 const TABLE_HEAD = ["Id", "User", "Role", "Gender", "Verified", "", ""];
 
@@ -59,7 +36,6 @@ const UserTable = ({
     setSelectedUser(user);
     setOpenEdit(!openEdit);
   };
-
   const handleDeleteOpen = (user_id) => {
     setSelectedUser({ id: user_id });
     setOpenDelete(!openDelete);
@@ -88,15 +64,6 @@ const UserTable = ({
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          {/* <Tabs value="all" className="w-full md:w-max">
-            <TabsHeader>
-              {TABS.map(({ label, value }) => (
-                <Tab key={value} value={value}>
-                  &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                </Tab>
-              ))}
-            </TabsHeader>
-          </Tabs> */}
           <div className="w-full md:w-72">
             <Input
               label="Search"
@@ -134,125 +101,19 @@ const UserTable = ({
                   .toLowerCase()
                   .includes(search.toLowerCase())
               )
-              .map(
-                (
-                  {
-                    id,
-                    first_name,
-                    last_name,
-                    email,
-                    role,
-                    password,
-                    is_verified,
-                    gender,
-                  },
-                  index
-                ) => {
-                  const isLast = index === users.length - 1;
-                  const classes = isLast
-                    ? "p-4"
-                    : "p-4 border-b border-blue-gray-50";
-
-                  return (
-                    <tr key={id}>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {id}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
-                          <Avatar
-                            src={`https://robohash.org/${email}`}
-                            alt={first_name}
-                            size="sm"
-                          />
-                          <div className="flex flex-col">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {first_name} {last_name}
-                            </Typography>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal opacity-70"
-                            >
-                              {email}
-                            </Typography>
-                          </div>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {role}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {gender}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <Chip
-                          variant="ghost"
-                          size="sm"
-                          value={is_verified ? "Verified" : "Not Verified"}
-                          color={is_verified ? "green" : "blue-gray"}
-                        />
-                      </td>
-                      <td className={classes}>
-                        <Tooltip content="Edit User">
-                          <IconButton
-                            variant="text"
-                            onClick={() =>
-                              handleEditOpen({
-                                id,
-                                first_name,
-                                last_name,
-                                email,
-                                password,
-                                role,
-                                is_verified,
-                                gender,
-                              })
-                            }
-                          >
-                            <PencilIcon className="h-4 w-4" />
-                          </IconButton>
-                        </Tooltip>
-                      </td>
-                      <td className={classes}>
-                        <Tooltip content="Delete User">
-                          <IconButton
-                            variant="text"
-                            onClick={() => handleDeleteOpen(id)}
-                          >
-                            <AiFillDelete className="h-4 w-4" />
-                          </IconButton>
-                        </Tooltip>
-                      </td>
-                    </tr>
-                  );
-                }
-              )}
+              .map((user, index) => (
+                <UserTableRow
+                  key={user.id}
+                  user={user}
+                  isLast={index === users.length - 1}
+                  handleEditOpen={handleEditOpen}
+                  handleDeleteOpen={handleDeleteOpen}
+                />
+              ))}
           </tbody>
         </table>
       </CardBody>
+
       <AddUserModal
         open={openAdd}
         handleOpen={handleAddOpen}
