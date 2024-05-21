@@ -11,14 +11,9 @@ route.patch(
   "/:id",
   verifyUser,
   verifysuperAdmin,
-  warehouseController.addWarehouse
-);
-route.post(
-  "/",
-  verifyUser,
-  verifysuperAdmin,
   warehouseController.editWarehouse
 );
+route.post("/", verifyUser, verifysuperAdmin, warehouseController.addWarehouse);
 route.delete(
   "/:id",
   verifyUser,
