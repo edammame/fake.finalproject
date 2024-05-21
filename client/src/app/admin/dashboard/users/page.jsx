@@ -12,7 +12,7 @@ function UsersPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [value] = useDebounce(search, 500);
   const [alert, setAlert] = useState({ message: "", type: "" });
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
 
   useEffect(() => {
     fetchUsers();
