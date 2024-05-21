@@ -42,6 +42,14 @@ export const manageUserController = {
                 contains: searchQuery,
               },
             },
+            {
+              email: {
+                contains: searchQuery,
+              },
+            },
+            {
+              id: isNaN(Number(searchQuery)) ? undefined : Number(searchQuery),
+            },
           ],
         },
         select: {
@@ -67,6 +75,14 @@ export const manageUserController = {
               last_name: {
                 contains: searchQuery,
               },
+            },
+            {
+              email: {
+                contains: searchQuery,
+              },
+            },
+            {
+              id: isNaN(Number(searchQuery)) ? undefined : Number(searchQuery),
             },
           ],
         },
