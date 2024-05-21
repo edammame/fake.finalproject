@@ -8,17 +8,23 @@ import { Alert } from "@material-tailwind/react";
 function UsersPage() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [value] = useDebounce(search, 500);
   const [alert, setAlert] = useState({ message: "", type: "" });
+  const itemsPerPage = 10;
 
   useEffect(() => {
     fetchUsers();
-  }, [value]);
+  }, [value, currentPage]);
 
   async function fetchUsers() {
     try {
-      const response = await axiosInstance().get("/manageusers/");
+      const response = await axiosInstance().get("/manageusers/", {
+        params: { search: value, page: currentPage, limit: itemsPerPage },
+      });
       setUsers(response.data);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
@@ -80,6 +86,9 @@ function UsersPage() {
         addUser={addUser}
         editUser={editUser}
         deleteUser={deleteUser}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
       />
     </div>
   );

@@ -25,6 +25,9 @@ const UserTable = ({
   addUser,
   editUser,
   deleteUser,
+  currentPage,
+  totalPages,
+  setCurrentPage,
 }) => {
   const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
@@ -39,6 +42,14 @@ const UserTable = ({
   const handleDeleteOpen = (user_id) => {
     setSelectedUser({ id: user_id });
     setOpenDelete(!openDelete);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
   return (
@@ -113,7 +124,29 @@ const UserTable = ({
           </tbody>
         </table>
       </CardBody>
-
+      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+        <Typography variant="small" color="blue-gray" className="font-normal">
+          Page {currentPage} of {totalPages}
+        </Typography>
+        <div className="flex gap-2">
+          <Button
+            variant="outlined"
+            size="sm"
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outlined"
+            size="sm"
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </Button>
+        </div>
+      </CardFooter>
       <AddUserModal
         open={openAdd}
         handleOpen={handleAddOpen}
