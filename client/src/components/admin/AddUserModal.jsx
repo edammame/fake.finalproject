@@ -53,18 +53,21 @@ const AddUserModal = ({ open, handleOpen, addUser }) => {
             name="first_name"
             value={formData.first_name}
             onChange={handleChange}
+            autoComplete="off"
           />
           <Input
             label="Last Name"
             name="last_name"
             value={formData.last_name}
             onChange={handleChange}
+            autoComplete="off"
           />
           <Input
             label="Email"
             name="email"
             value={formData.email}
             onChange={handleChange}
+            autoComplete="off"
           />
           <Input
             label="Password"
