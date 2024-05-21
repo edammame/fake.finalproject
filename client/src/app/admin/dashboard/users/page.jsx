@@ -23,7 +23,7 @@ function UsersPage() {
       const response = await axiosInstance().get("/manageusers/", {
         params: { search: value, page: currentPage, limit: itemsPerPage },
       });
-      setUsers(response.data);
+      setUsers(response.data.users);
       setTotalPages(response.data.totalPages);
     } catch (error) {
       console.error("Error fetching users:", error);

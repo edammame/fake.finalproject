@@ -23,7 +23,27 @@ const forgotPass = fs
 export const manageUserController = {
   async getAllUsers(req: Request, res: Response, next: NextFunction) {
     try {
+      const { page = 1, limit = 10, search = "" } = req.query;
+      const offset = (Number(page) - 1) * Number(limit);
+      const searchQuery = String(search).toLowerCase();
+
       const users = await prisma.user.findMany({
+        skip: offset,
+        take: Number(limit),
+        where: {
+          OR: [
+            {
+              first_name: {
+                contains: searchQuery,
+              },
+            },
+            {
+              last_name: {
+                contains: searchQuery,
+              },
+            },
+          ],
+        },
         select: {
           id: true,
           first_name: true,
@@ -34,7 +54,27 @@ export const manageUserController = {
           is_verified: true,
         },
       });
-      res.status(200).send(users);
+
+      const totalUsers = await prisma.user.count({
+        where: {
+          OR: [
+            {
+              first_name: {
+                contains: searchQuery,
+              },
+            },
+            {
+              last_name: {
+                contains: searchQuery,
+              },
+            },
+          ],
+        },
+      });
+
+      const totalPages = Math.ceil(totalUsers / Number(limit));
+
+      res.status(200).send({ users, totalPages });
     } catch (error) {
       res.status(500).send("Error fetching users");
     }

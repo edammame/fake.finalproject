@@ -107,11 +107,11 @@ const UserTable = ({
           </thead>
           <tbody>
             {users
-              .filter((user) =>
-                `${user.first_name} ${user.last_name}`
-                  .toLowerCase()
-                  .includes(search.toLowerCase())
-              )
+              // .filter((user) =>
+              //   `${user.first_name} ${user.last_name}`
+              //     .toLowerCase()
+              //     .includes(search.toLowerCase())
+              // )
               .map((user, index) => (
                 <UserTableRow
                   key={user.id}
