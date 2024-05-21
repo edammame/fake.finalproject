@@ -1,4 +1,4 @@
-import { axios } from "axios";
+import axios from "axios";
 
 const OPEN_CAGE_API_KEY = process.env.OPENCAGE_API_KEY; // Ensure you have this in your environment variables
 
