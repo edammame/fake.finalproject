@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import UserTable from "@/components/admin/UserTable";
+import WarehouseTable from "@/components/super-admin/WarehouseTable";
 import { axiosInstance } from "@/axios/axios";
 import { useDebounce } from "use-debounce";
 import { Alert } from "@material-tailwind/react";
@@ -79,7 +79,7 @@ function UsersPage() {
           {alert.message}
         </Alert>
       )}
-      <UserTable
+      <WarehouseTable
         users={users}
         search={search}
         setSearch={setSearch}

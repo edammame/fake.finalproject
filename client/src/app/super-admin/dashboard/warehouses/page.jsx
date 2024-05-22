@@ -1,242 +1,97 @@
 "use client";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
-import {
-  Card,
-  CardHeader,
-  Input,
-  Typography,
-  Button,
-  CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
-} from "@material-tailwind/react";
-import { AiFillDelete, AiOutlineDelete } from "react-icons/ai";
-import { FiDelete } from "react-icons/fi";
+import React, { useEffect, useState } from "react";
+import UserTable from "@/components/admin/UserTable";
+import { axiosInstance } from "@/axios/axios";
+import { useDebounce } from "use-debounce";
+import { Alert } from "@material-tailwind/react";
 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Jakarta",
-    value: "jakarta",
-  },
-  {
-    label: "BSD",
-    value: "bsd",
-  },
-  {
-    label: "Surabaya",
-    value: "surabaya",
-  },
-];
+function UsersPage() {
+  const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [value] = useDebounce(search, 500);
+  const [alert, setAlert] = useState({ message: "", type: "" });
+  const itemsPerPage = 10;
 
-const TABLE_HEAD = ["User", "Role", "Status", "CreateAt", "", ""];
+  useEffect(() => {
+    fetchUsers();
+  }, [value, currentPage]);
 
-const TABLE_ROWS = [
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-    name: "John Michael",
-    email: "john@creative-tim.com",
-    job: "Manager",
-    org: "Organization",
-    online: true,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
-    name: "Alexa Liras",
-    email: "alexa@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    online: false,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
-    name: "Laurent Perrier",
-    email: "laurent@creative-tim.com",
-    job: "Executive",
-    org: "Projects",
-    online: false,
-    date: "19/09/17",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-    name: "Michael Levi",
-    email: "michael@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    online: true,
-    date: "24/12/08",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-    name: "Richard Gran",
-    email: "richard@creative-tim.com",
-    job: "Manager",
-    org: "Executive",
-    online: false,
-    date: "04/10/21",
-  },
-];
+  async function fetchUsers() {
+    try {
+      const response = await axiosInstance().get("/manageusers/", {
+        params: { search: value, page: currentPage, limit: itemsPerPage },
+      });
+      setUsers(response.data.users);
+      setTotalPages(response.data.totalPages);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  }
 
-function WarehousesPage() {
+  async function addUser(userData) {
+    try {
+      await axiosInstance().post("/manageusers/", userData);
+      fetchUsers();
+      showAlert("User added successfully", "success");
+    } catch (error) {
+      console.error("Error adding user:", error);
+      showAlert("Error adding user", "error");
+    }
+  }
+
+  async function editUser(user_id, userData) {
+    try {
+      const updatedData = { ...userData };
+      if (!userData.password) {
+        delete updatedData.password;
+      }
+      await axiosInstance().patch(`/manageusers/${user_id}`, updatedData);
+      fetchUsers();
+      showAlert("User edited successfully", "success");
+    } catch (error) {
+      console.error("Error editing user:", error);
+      showAlert("Error editing user", "error");
+    }
+  }
+
+  async function deleteUser(user_id) {
+    try {
+      await axiosInstance().delete(`/manageusers/${user_id}`);
+      fetchUsers();
+      showAlert("User deleted successfully", "success");
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      showAlert("Error deleting user", "error");
+    }
+  }
+
+  function showAlert(message, type) {
+    setAlert({ message, type });
+    setTimeout(() => setAlert({ message: "", type: "" }), 3000);
+  }
+
   return (
-    <Card className="h-full w-full mt-3">
-      <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-8 flex items-center justify-between gap-8">
-          <div>
-            <Typography variant="h5" color="blue-gray">
-              Warehouse list
-            </Typography>
-            <Typography color="gray" className="mt-1 font-normal">
-              See information about all Warehouse
-            </Typography>
-          </div>
-          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button className="flex items-center gap-3" size="sm">
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Set Admin
-              Warehouse
-            </Button>
-          </div>
-        </div>
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max">
-            <TabsHeader>
-              {TABS.map(({ label, value }) => (
-                <Tab key={value} value={value}>
-                  &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                </Tab>
-              ))}
-            </TabsHeader>
-          </Tabs>
-          <div className="w-full md:w-72">
-            <Input
-              label="Search"
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-            />
-          </div>
-        </div>
-      </CardHeader>
-      <CardBody className=" px-0">
-        <table className="mt-4 w-full min-w-max table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th
-                  key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    {head}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {TABLE_ROWS.map(
-              ({ img, name, email, job, org, online, date }, index) => {
-                const isLast = index === TABLE_ROWS.length - 1;
-                const classes = isLast
-                  ? "p-4"
-                  : "p-4 border-b border-blue-gray-50";
-
-                return (
-                  <tr key={name}>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <Avatar src={img} alt={name} size="sm" />
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {name}
-                          </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {email}
-                          </Typography>
-                        </div>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex flex-col">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {job}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                        >
-                          {org}
-                        </Typography>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          variant="ghost"
-                          size="sm"
-                          value={online ? "online" : "offline"}
-                          color={online ? "green" : "blue-gray"}
-                        />
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {date}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Tooltip content="Edit User">
-                        <IconButton variant="text">
-                          <PencilIcon className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
-                    </td>
-                    <td className={classes}>
-                      <Tooltip content="Delete User">
-                        <IconButton variant="text">
-                          <AiFillDelete className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
-          </tbody>
-        </table>
-      </CardBody>
-    </Card>
+    <div>
+      {alert.message && (
+        <Alert color={alert.type === "success" ? "green" : "red"}>
+          {alert.message}
+        </Alert>
+      )}
+      <UserTable
+        users={users}
+        search={search}
+        setSearch={setSearch}
+        addUser={addUser}
+        editUser={editUser}
+        deleteUser={deleteUser}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+      />
+    </div>
   );
 }
-export default WarehousesPage;
+
+export default UsersPage;
