@@ -64,7 +64,7 @@ const UserTable = ({
             <Typography variant="h5" color="blue-gray">
               Users list
             </Typography>
-            <Typography color="gray" className="mt-1 font-normal">
+            <Typography color="gray" className=" font-normal">
               See information about all users
             </Typography>
           </div>
@@ -78,7 +78,7 @@ const UserTable = ({
             </Button>
           </div>
         </div>
-        <div className="flex flex-col mt-3 items-center justify-between gap-4 md:flex-row">
+        <div className="flex flex-col items-center mt-3 justify-between gap-4 md:flex-row">
           <div className="w-full md:w-72">
             <Input
               label="Search"
