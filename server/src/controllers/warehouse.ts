@@ -93,18 +93,15 @@ export const warehouseController = {
 
   async addWarehouse(req: ReqUser, res: Response, next: NextFunction) {
     try {
-      const { warehouse_name, location, city, province } = req.body;
-
-      // Fetch the geocoding data for the given location
-      const { latitude, longitude } = await getGeocodingData(location);
-
-      const newWarehouse = {
+      const { warehouse_name, location, city, province, longtitude, latitude } =
+        req.body;
+      const newWarehouse: Prisma.WarehouseCreateInput = {
         warehouse_name,
         location,
         city,
         province,
-        longtitude: longitude.toString(),
-        latitude: latitude.toString(),
+        longtitude,
+        latitude,
         user: {
           connect: {
             id: req.user?.id,
@@ -115,7 +112,6 @@ export const warehouseController = {
       await prisma.warehouse.create({
         data: newWarehouse,
       });
-
       res.send({
         success: true,
         message: "Adding New Warehouse",
@@ -129,14 +125,10 @@ export const warehouseController = {
     try {
       const { warehouse_name, longtitude, latitude, location, city } = req.body;
 
-      // Fetch the geocoding data for the given location if the location has changed
-      const { latitude: newLatitude, longitude: newLongitude } =
-        await getGeocodingData(location);
-
-      const editWarehouse = {
+      const editwarehouse: Prisma.WarehouseUpdateInput = {
         warehouse_name,
-        longtitude: newLongitude.toString(),
-        latitude: newLatitude.toString(),
+        longtitude,
+        latitude,
         location,
         user: {
           connect: {
@@ -151,7 +143,7 @@ export const warehouseController = {
       };
 
       await prisma.warehouse.update({
-        data: editWarehouse,
+        data: editwarehouse,
         where: {
           id: Number(req.params.id),
         },
@@ -185,13 +177,13 @@ export const warehouseController = {
 
   async assignWarehouseAdmin(req: Request, res: Response, next: NextFunction) {
     try {
-      const { warehouse_id, admin_id } = req.body;
+      const { warehouse_id, user_id } = req.body;
 
       await prisma.warehouse.update({
         where: { id: Number(warehouse_id) },
         data: {
           user: {
-            connect: { id: Number(admin_id) },
+            connect: { id: Number(user_id) },
           },
         },
       });
