@@ -53,9 +53,13 @@ const UserTable = ({
   };
 
   return (
-    <Card className="h-full w-full mt-3">
-      <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-8 flex items-center justify-between gap-8">
+    <Card className="h-full w-full max-h-screen overflow-y-auto">
+      <CardHeader
+        floated={false}
+        shadow={false}
+        className="rounded-none min-h-28"
+      >
+        <div className="flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
               Users list
@@ -74,7 +78,7 @@ const UserTable = ({
             </Button>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+        <div className="flex flex-col mt-3 items-center justify-between gap-4 md:flex-row">
           <div className="w-full md:w-72">
             <Input
               label="Search"
@@ -86,7 +90,7 @@ const UserTable = ({
         </div>
       </CardHeader>
       <CardBody className="px-0">
-        <table className="mt-4 w-full min-w-max table-auto text-left">
+        <table className=" w-full min-w-max table-auto text-left">
           <thead>
             <tr>
               {TABLE_HEAD.map((head) => (
