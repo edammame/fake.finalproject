@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import UserTable from "@/components/admin/UserTable";
+import WarehouseTable from "@/components/super-admin/WarehouseTable"; // Update to WarehouseTable
 import { axiosInstance } from "@/axios/axios";
 import { useDebounce } from "use-debounce";
 import { Alert } from "@material-tailwind/react";
 
-function UsersPage() {
-  const [users, setUsers] = useState([]);
+function WarehousePage() {
+  const [warehouses, setWarehouses] = useState([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -15,55 +15,66 @@ function UsersPage() {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    fetchUsers();
+    fetchWarehouses();
   }, [value, currentPage]);
 
-  async function fetchUsers() {
+  async function fetchWarehouses() {
     try {
-      const response = await axiosInstance().get("/manageusers/", {
+      const response = await axiosInstance().get("/warehouses/", {
         params: { search: value, page: currentPage, limit: itemsPerPage },
       });
-      setUsers(response.data.users);
+      setWarehouses(response.data.warehouses);
       setTotalPages(response.data.totalPages);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error fetching warehouses:", error);
     }
   }
 
-  async function addUser(userData) {
+  async function addWarehouse(warehouseData) {
     try {
-      await axiosInstance().post("/manageusers/", userData);
-      fetchUsers();
-      showAlert("User added successfully", "success");
+      await axiosInstance().post("/warehouses/", warehouseData);
+      fetchWarehouses();
+      showAlert("Warehouse added successfully", "success");
     } catch (error) {
-      console.error("Error adding user:", error);
-      showAlert("Error adding user", "error");
+      console.error("Error adding warehouse:", error);
+      showAlert("Error adding warehouse", "error");
     }
   }
 
-  async function editUser(user_id, userData) {
+  async function editWarehouse(warehouse_id, warehouseData) {
     try {
-      const updatedData = { ...userData };
-      if (!userData.password) {
-        delete updatedData.password;
-      }
-      await axiosInstance().patch(`/manageusers/${user_id}`, updatedData);
-      fetchUsers();
-      showAlert("User edited successfully", "success");
+      const updatedData = { ...warehouseData };
+      await axiosInstance().patch(`/warehouses/${warehouse_id}`, updatedData);
+      fetchWarehouses();
+      showAlert("Warehouse edited successfully", "success");
     } catch (error) {
-      console.error("Error editing user:", error);
-      showAlert("Error editing user", "error");
+      console.error("Error editing warehouse:", error);
+      showAlert("Error editing warehouse", "error");
     }
   }
 
-  async function deleteUser(user_id) {
+  async function deleteWarehouse(warehouse_id) {
     try {
-      await axiosInstance().delete(`/manageusers/${user_id}`);
-      fetchUsers();
-      showAlert("User deleted successfully", "success");
+      await axiosInstance().delete(`/warehouses/${warehouse_id}`);
+      fetchWarehouses();
+      showAlert("Warehouse deleted successfully", "success");
     } catch (error) {
-      console.error("Error deleting user:", error);
-      showAlert("Error deleting user", "error");
+      console.error("Error deleting warehouse:", error);
+      showAlert("Error deleting warehouse", "error");
+    }
+  }
+
+  async function assignWarehouseAdmin(warehouse_id, user_id) {
+    try {
+      await axiosInstance().post(`/warehouses/assign-admin`, {
+        warehouse_id,
+        user_id,
+      });
+      fetchWarehouses();
+      showAlert("Warehouse admin assigned successfully", "success");
+    } catch (error) {
+      console.error("Error assigning warehouse admin:", error);
+      showAlert("Error assigning warehouse admin", "error");
     }
   }
 
@@ -79,13 +90,14 @@ function UsersPage() {
           {alert.message}
         </Alert>
       )}
-      <UserTable
-        users={users}
+      <WarehouseTable
+        warehouses={warehouses}
         search={search}
         setSearch={setSearch}
-        addUser={addUser}
-        editUser={editUser}
-        deleteUser={deleteUser}
+        addWarehouse={addWarehouse}
+        editWarehouse={editWarehouse}
+        deleteWarehouse={deleteWarehouse}
+        assignWarehouseAdmin={assignWarehouseAdmin}
         currentPage={currentPage}
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
@@ -94,4 +106,4 @@ function UsersPage() {
   );
 }
 
-export default UsersPage;
+export default WarehousePage;

@@ -6,29 +6,23 @@ import {
   DialogFooter,
   Button,
   Input,
-  Select,
-  Option,
 } from "@material-tailwind/react";
 
-const AddUserModal = ({ open, handleOpen, addUser }) => {
+const AddWarehouseModal = ({ open, handleOpen, addWarehouse }) => {
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    gender: "",
-    role: "",
+    warehouse_name: "",
+    location: "",
+    city: "",
+    province: "",
   });
 
   useEffect(() => {
     if (!open) {
       setFormData({
-        first_name: "",
-        last_name: "",
-        email: "",
-        password: "",
-        gender: "",
-        role: "",
+        warehouse_name: "",
+        location: "",
+        city: "",
+        province: "",
       });
     }
   }, [open]);
@@ -39,62 +33,43 @@ const AddUserModal = ({ open, handleOpen, addUser }) => {
   };
 
   const handleSubmit = () => {
-    addUser(formData);
+    addWarehouse(formData);
     handleOpen();
   };
 
   return (
     <Dialog open={open} handler={handleOpen}>
-      <DialogHeader>Add User</DialogHeader>
+      <DialogHeader>Add Warehouse</DialogHeader>
       <DialogBody>
         <div className="space-y-4">
           <Input
-            label="First Name"
-            name="first_name"
-            value={formData.first_name}
+            label="Warehouse Name"
+            name="warehouse_name"
+            value={formData.warehouse_name}
             onChange={handleChange}
             autoComplete="off"
           />
           <Input
-            label="Last Name"
-            name="last_name"
-            value={formData.last_name}
+            label="Location"
+            name="location"
+            value={formData.location}
             onChange={handleChange}
             autoComplete="off"
           />
           <Input
-            label="Email"
-            name="email"
-            value={formData.email}
+            label="City"
+            name="city"
+            value={formData.city}
             onChange={handleChange}
             autoComplete="off"
           />
           <Input
-            label="Password"
-            type="password"
-            name="password"
-            value={formData.password}
+            label="Province"
+            name="province"
+            value={formData.province}
             onChange={handleChange}
+            autoComplete="off"
           />
-          <Select
-            label="Gender"
-            name="gender"
-            value={formData.gender}
-            onChange={(e) => setFormData({ ...formData, gender: e })}
-          >
-            <Option value="male">Male</Option>
-            <Option value="female">Female</Option>
-          </Select>
-          <Select
-            label="Role"
-            name="role"
-            value={formData.role}
-            onChange={(e) => setFormData({ ...formData, role: e })}
-          >
-            <Option value="user">User</Option>
-            <Option value="admin">Admin</Option>
-            <Option value="superAdmin">Super Admin</Option>
-          </Select>
         </div>
       </DialogBody>
       <DialogFooter>
@@ -102,11 +77,11 @@ const AddUserModal = ({ open, handleOpen, addUser }) => {
           Cancel
         </Button>
         <Button variant="gradient" color="green" onClick={handleSubmit}>
-          Add User
+          Add Warehouse
         </Button>
       </DialogFooter>
     </Dialog>
   );
 };
 
-export default AddUserModal;
+export default AddWarehouseModal;

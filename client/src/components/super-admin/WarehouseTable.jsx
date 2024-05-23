@@ -1,6 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import {
+  BuildingOfficeIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
@@ -11,36 +14,47 @@ import {
   CardBody,
   CardFooter,
 } from "@material-tailwind/react";
-import AddUserModal from "./AddUserModal";
-import EditUserModal from "./EditUserModal";
-import DeleteUserModal from "./DeleteUserModal";
-import UserTableRow from "./UserTableRow";
+import AddWarehouseModal from "./AddWarehouseModal";
+import EditWarehouseModal from "./EditWarehouseModal";
+import DeleteWarehouseModal from "./DeleteWarehouseModal";
+import WarehouseTableRow from "./WarehouseTableRow";
 
-const TABLE_HEAD = ["Id", "User", "Role", "Gender", "Verified", "", ""];
+const TABLE_HEAD = [
+  "Id",
+  "Warehouse Name",
+  "Location",
+  "City",
+  "Province",
+  "Longitude",
+  "Latitude",
+  "",
+  "",
+];
 
-const UserTable = ({
-  users,
+const WarehouseTable = ({
+  warehouses,
   search,
   setSearch,
-  addUser,
-  editUser,
-  deleteUser,
+  addWarehouse,
+  editWarehouse,
+  deleteWarehouse,
   currentPage,
   totalPages,
   setCurrentPage,
+  assignWarehouseAdmin,
 }) => {
   const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedWarehouse, setSelectedWarehouse] = useState(null);
 
   const handleAddOpen = () => setOpenAdd(!openAdd);
-  const handleEditOpen = (user) => {
-    setSelectedUser(user);
+  const handleEditOpen = (warehouse) => {
+    setSelectedWarehouse(warehouse);
     setOpenEdit(!openEdit);
   };
-  const handleDeleteOpen = (user_id) => {
-    setSelectedUser({ id: user_id });
+  const handleDeleteOpen = (warehouse_id) => {
+    setSelectedWarehouse({ id: warehouse_id });
     setOpenDelete(!openDelete);
   };
 
@@ -62,9 +76,9 @@ const UserTable = ({
         <div className="flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Warehouse list
+              Warehouse List
             </Typography>
-            <Typography color="gray" className=" font-normal">
+            <Typography color="gray" className="font-normal">
               See information about all warehouses
             </Typography>
           </div>
@@ -74,7 +88,7 @@ const UserTable = ({
               size="sm"
               onClick={handleAddOpen}
             >
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Assign Admin
+              <BuildingOfficeIcon strokeWidth={2} className="h-4 w-4" /> Add
               Warehouse
             </Button>
           </div>
@@ -91,7 +105,7 @@ const UserTable = ({
         </div>
       </CardHeader>
       <CardBody className="px-0">
-        <table className=" w-full min-w-max table-auto text-left">
+        <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
               {TABLE_HEAD.map((head) => (
@@ -111,21 +125,25 @@ const UserTable = ({
             </tr>
           </thead>
           <tbody>
-            {users
-              // .filter((user) =>
-              //   `${user.first_name} ${user.last_name}`
-              //     .toLowerCase()
-              //     .includes(search.toLowerCase())
-              // )
-              .map((user, index) => (
-                <UserTableRow
-                  key={user.id}
-                  user={user}
-                  isLast={index === users.length - 1}
+            {warehouses && warehouses.length > 0 ? (
+              warehouses.map((warehouse, index) => (
+                <WarehouseTableRow
+                  key={warehouse.id}
+                  warehouse={warehouse}
+                  isLast={index === warehouses.length - 1}
                   handleEditOpen={handleEditOpen}
                   handleDeleteOpen={handleDeleteOpen}
                 />
-              ))}
+              ))
+            ) : (
+              <tr>
+                <td colSpan={TABLE_HEAD.length} className="text-center p-4">
+                  <Typography variant="small" color="blue-gray">
+                    No warehouses found
+                  </Typography>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </CardBody>
@@ -152,25 +170,25 @@ const UserTable = ({
           </Button>
         </div>
       </CardFooter>
-      <AddUserModal
+      <AddWarehouseModal
         open={openAdd}
         handleOpen={handleAddOpen}
-        addUser={addUser}
+        addWarehouse={addWarehouse}
       />
-      <EditUserModal
+      <EditWarehouseModal
         open={openEdit}
         handleOpen={handleEditOpen}
-        editUser={editUser}
-        user={selectedUser}
+        editWarehouse={editWarehouse}
+        warehouse={selectedWarehouse}
       />
-      <DeleteUserModal
+      <DeleteWarehouseModal
         open={openDelete}
         handleOpen={handleDeleteOpen}
-        deleteUser={deleteUser}
-        userId={selectedUser?.id}
+        deleteWarehouse={deleteWarehouse}
+        warehouseId={selectedWarehouse?.id}
       />
     </Card>
   );
 };
 
-export default UserTable;
+export default WarehouseTable;

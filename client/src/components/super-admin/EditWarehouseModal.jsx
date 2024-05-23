@@ -10,28 +10,28 @@ import {
   Option,
 } from "@material-tailwind/react";
 
-const EditUserModal = ({ open, handleOpen, editUser, user }) => {
+const EditWarehouseModal = ({ open, handleOpen, editWarehouse, warehouse }) => {
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    gender: "",
-    role: "",
+    warehouse_name: "",
+    location: "",
+    city: "",
+    province: "",
+    longtitude: "",
+    latitude: "",
   });
 
   useEffect(() => {
-    if (user) {
+    if (warehouse) {
       setFormData({
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-        password: "",
-        gender: user.gender,
-        role: user.role,
+        warehouse_name: warehouse.warehouse_name,
+        location: warehouse.location,
+        city: warehouse.city,
+        province: warehouse.province,
+        longtitude: warehouse.longtitude,
+        latitude: warehouse.latitude,
       });
     }
-  }, [user]);
+  }, [warehouse]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,59 +39,51 @@ const EditUserModal = ({ open, handleOpen, editUser, user }) => {
   };
 
   const handleSubmit = () => {
-    editUser(user.id, formData);
+    editWarehouse(warehouse.id, formData);
     handleOpen();
   };
 
   return (
     <Dialog open={open} handler={handleOpen}>
-      <DialogHeader>Edit User</DialogHeader>
+      <DialogHeader>Edit Warehouse</DialogHeader>
       <DialogBody>
         <div className="space-y-4">
           <Input
-            label="First Name"
-            name="first_name"
-            value={formData.first_name}
+            label="Warehouse Name"
+            name="warehouse_name"
+            value={formData.warehouse_name}
             onChange={handleChange}
           />
           <Input
-            label="Last Name"
-            name="last_name"
-            value={formData.last_name}
+            label="Location"
+            name="location"
+            value={formData.location}
             onChange={handleChange}
           />
           <Input
-            label="Email"
-            name="email"
-            value={formData.email}
+            label="City"
+            name="city"
+            value={formData.city}
             onChange={handleChange}
           />
           <Input
-            label="Password"
-            type="password"
-            name="password"
-            value={formData.password}
+            label="Province"
+            name="province"
+            value={formData.province}
             onChange={handleChange}
           />
-          <Select
-            label="Gender"
-            name="gender"
-            value={formData.gender}
-            onChange={(e) => setFormData({ ...formData, gender: e })}
-          >
-            <Option value="male">Male</Option>
-            <Option value="female">Female</Option>
-          </Select>
-          <Select
-            label="Role"
-            name="role"
-            value={formData.role}
-            onChange={(e) => setFormData({ ...formData, role: e })}
-          >
-            <Option value="user">User</Option>
-            <Option value="admin">Admin</Option>
-            <Option value="superAdmin">Super Admin</Option>
-          </Select>
+          <Input
+            label="Longitude"
+            name="longtitude"
+            value={formData.longtitude}
+            onChange={handleChange}
+          />
+          <Input
+            label="Latitude"
+            name="latitude"
+            value={formData.latitude}
+            onChange={handleChange}
+          />
         </div>
       </DialogBody>
       <DialogFooter>
@@ -106,4 +98,4 @@ const EditUserModal = ({ open, handleOpen, editUser, user }) => {
   );
 };
 
-export default EditUserModal;
+export default EditWarehouseModal;
