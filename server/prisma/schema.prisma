@@ -86,7 +86,7 @@ model Warehouse {
   province_id Int
   province Province @relation(fields:[province_id], references:[id], onDelete: NoAction,  onUpdate: NoAction)
   warehouse_name String
-  longtitude String
+  longitude String
   latitude String
   location String
   created_at DateTime @default(now())

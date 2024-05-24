@@ -93,18 +93,27 @@ export const warehouseController = {
 
   async addWarehouse(req: ReqUser, res: Response, next: NextFunction) {
     try {
-      const { warehouse_name, location, city, province, longtitude, latitude } =
-        req.body;
+      const { warehouse_name, location, city_id, province_id } = req.body;
+      const geoData = await getGeocodingData(location, city_id, province_id);
+
       const newWarehouse: Prisma.WarehouseCreateInput = {
         warehouse_name,
         location,
-        city,
-        province,
-        longtitude,
-        latitude,
+        longitude: geoData.longitude,
+        latitude: geoData.latitude,
         user: {
           connect: {
             id: req.user?.id,
+          },
+        },
+        city: {
+          connect: {
+            id: Number(city_id),
+          },
+        },
+        province: {
+          connect: {
+            id: Number(province_id),
           },
         },
       };
@@ -123,13 +132,14 @@ export const warehouseController = {
 
   async editWarehouse(req: Request, res: Response, next: NextFunction) {
     try {
-      const { warehouse_name, longtitude, latitude, location, city } = req.body;
+      const { warehouse_name, location, city_id, province_id } = req.body;
+      const geoData = await getGeocodingData(location, city_id, province_id);
 
-      const editwarehouse: Prisma.WarehouseUpdateInput = {
+      const editWarehouse: Prisma.WarehouseUpdateInput = {
         warehouse_name,
-        longtitude,
-        latitude,
         location,
+        longitude: geoData.longitude,
+        latitude: geoData.latitude,
         user: {
           connect: {
             id: Number(req.params.id),
@@ -137,13 +147,18 @@ export const warehouseController = {
         },
         city: {
           connect: {
-            id: Number(city),
+            id: Number(city_id),
+          },
+        },
+        province: {
+          connect: {
+            id: Number(province_id),
           },
         },
       };
 
       await prisma.warehouse.update({
-        data: editwarehouse,
+        data: editWarehouse,
         where: {
           id: Number(req.params.id),
         },
