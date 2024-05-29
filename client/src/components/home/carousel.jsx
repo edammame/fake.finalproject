@@ -4,11 +4,13 @@ import { Carousel } from "@material-tailwind/react";
 function CarouselComponent() {
   return (
     <>
-      <main className="flex justify-center mt-8 mx-20">
+      <main className="flex justify-center mt-8 mx-3 lg:mx-20 md:mx-8">
         <Carousel
           transition={{ duration: 1 }}
           autoplay
           loop
+          nextArrow={false}
+          prevArrow={false}
           navigation={({ setActiveIndex, activeIndex, length }) => (
             <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
               {new Array(length).fill("").map((_, i) => (
@@ -22,7 +24,7 @@ function CarouselComponent() {
               ))}
             </div>
           )}
-          className="h-[550px]"
+          className="lg:h-[550px] sm:h-[400px] h-[200px]"
         >
           <div className="w-full h-full">
             <img

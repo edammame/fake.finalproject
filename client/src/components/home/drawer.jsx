@@ -63,7 +63,7 @@ function DrawerComponent() {
   );
   return (
     <>
-      <div className="fixed flex justify-end right-20 z-50 top-[42px]">
+      <div className="fixed flex justify-end right-3 z-50 top-[42px] lg:right-20 md:right-8">
         <IconButton
           variant="text"
           className="h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent"

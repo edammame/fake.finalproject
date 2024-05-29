@@ -6,9 +6,9 @@ function FooterComponent() {
   return (
     <>
       <div className="flex flex-col items-center w-full h-[550px] bg-[#dfdfdf] pb-10">
-        <main className="flex w-full h-full mx-10">
-          <section className="flex justify-center items-center w-1/2">
-            <div className="flex items-center w-2/4 gap-2">
+        <main className="grid w-full h-full sm:flex">
+          <section className="flex items-center w-1/2">
+            <div className="flex items-center w-2/4 gap-2 mx-3 lg:mx-20 md:mx-8">
               <img src={"/logo/jwp-03.png"} className="w-36" />
               <div>
                 <p className="translate-y-2 text-2xl">
@@ -20,7 +20,7 @@ function FooterComponent() {
               </div>
             </div>
           </section>
-          <section className="flex flex-col justify-center w-1/2 gap-4 px-20">
+          <section className="flex flex-col justify-center w-1/2 gap-4 px-3 lg:px-20 md:px-8">
             <div className="flex gap-20">
               <div className="flex-col">
                 <p>About Us</p>

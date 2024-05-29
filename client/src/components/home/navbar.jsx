@@ -71,10 +71,10 @@ function NavbarComponent() {
   return (
     <>
       <div className="sticky top-0 w-full bg-white z-50">
-        <div className="flex items-center justify-between mx-20 py-2">
+        <div className="flex items-center justify-between py-2 mx-3 lg:mx-20 md:mx-8">
           <div className="flex items-center gap-2">
             <img src={"/logo/jwp-02.png"} className="w-20" />
-            <p className="w-40 ">Jakarta warehouse Project</p>
+            <p className="w-40">Jakarta warehouse Project</p>
           </div>
 
           <div className="hidden sm:flex w-8/12 h-14 items-center py-2 px-4 rounded-full bg-gray-100 gap-3 mr-10">
@@ -99,7 +99,7 @@ function NavbarComponent() {
 
           <IconButton
             variant="text"
-            className="text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent sm:hidden mr-8"
+            className="text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent sm:hidden mr-7"
             ripple={false}
             onClick={() => setOpenBar(!openBar)}
           >

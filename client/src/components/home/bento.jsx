@@ -3,10 +3,10 @@
 function BentoComponents() {
   return (
     <>
-      <h1 className="flex justify-center text-3xl font-bold mt-20 mb-4">
+      <h1 className="flex justify-center text-lg font-bold mt-20 mb-4 md:text-2xl lg:text-3xl">
         JAKARTA WAREHOUSE PROJECT
       </h1>
-      <div className="mx-20 h-2/4 mb-10">
+      <div className="mx-3 h-2/4 mb-10 lg:mx-20 md:mx-8">
         <div className="flex gap-4 w-full">
           <a href="" className="w-full">
             <div
