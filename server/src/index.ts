@@ -32,10 +32,6 @@ app.use("/stocks", routes.stockRoutes);
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send({ message: error.message || "internal server error" });
-}); //error handler
-
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-  res.status(500).send({ message: error.message || "internal server error" });
 });
 
 app.use("*", (req: Request, res: Response, next: NextFunction) => {
