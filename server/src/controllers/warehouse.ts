@@ -171,7 +171,6 @@ export const warehouseController = {
       next(error);
     }
   },
-
   async deleteWarehouse(req: Request, res: Response, next: NextFunction) {
     try {
       const data: Prisma.WarehouseUncheckedUpdateInput = {

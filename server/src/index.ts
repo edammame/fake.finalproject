@@ -26,13 +26,20 @@ const PORT = process.env.PORT;
 app.use("/users", routes.userRoutes);
 app.use("/warehouses", routes.warehouseRoutes);
 app.use("/manageusers", routes.manageuserRoutes);
+app.use("/products", routes.productRoutes);
+app.use("/categories", routes.categoryRoutes);
+app.use("/stocks", routes.stockRoutes);
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send({ message: error.message || "internal server error" });
 }); //error handler
 
+app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+  res.status(500).send({ message: error.message || "internal server error" });
+});
+
 app.use("*", (req: Request, res: Response, next: NextFunction) => {
-  res.status(404).send("page not found"); //page not found handler
+  res.status(404).send("page not found");
 });
 
 app.listen(PORT, () => {

@@ -4,6 +4,7 @@ import multer from "multer";
 import uuid from "uuid";
 import moment from "moment";
 import { Request } from "express";
+
 export const fileUploader = ({
   destinationFolder = "",
   prefix = "",
