@@ -16,12 +16,12 @@ function NavbarComponent() {
 
   const navList = (
     <div className="flex gap-7">
-      <a href="">
+      <a href="/auth/login">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
-          className="w-6 h-6"
+          className="w-6 h-6 bg-blue-gray-400"
         >
           <path
             fillRule="evenodd"
