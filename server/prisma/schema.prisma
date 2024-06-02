@@ -91,7 +91,7 @@ model Warehouse {
   location String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
-  delete_at DateTime?
+  deleted_at DateTime?
   stocks Stock[]
   origin StockMutation[] @relation("FromWarehouse")
   destination StockMutation[] @relation("ToWarehouse")
