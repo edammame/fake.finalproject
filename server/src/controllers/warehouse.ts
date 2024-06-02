@@ -175,7 +175,7 @@ export const warehouseController = {
   async deleteWarehouse(req: Request, res: Response, next: NextFunction) {
     try {
       const data: Prisma.WarehouseUncheckedUpdateInput = {
-        delete_at: new Date(),
+        deleted_at: new Date(),
       };
       await prisma.warehouse.update({
         data: data,
