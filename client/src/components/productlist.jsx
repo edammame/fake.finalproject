@@ -4,11 +4,10 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Typography,
   Button,
 } from "@material-tailwind/react";
-import Pagination from "./pagination";
+import Pagination from "@/components/pagination";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -22,7 +21,7 @@ function ProductList() {
     axiosInstance()
       .get("/products/", {
         params: {
-          name: productSearch.name,
+          product_name: productSearch.product_name,
         },
       })
       .then((res) => {
@@ -52,15 +51,15 @@ function ProductList() {
 }
 export default ProductList;
 
-export function ProductCard({ name, image_url, description, price, id }) {
+export function ProductCard({ product_name, image_url, description, price, id }) {
   return (
     <>
-      <Link href={"/products/" + id}>
+      <Link href={"/admin/product/" + id}>
         <Card className=" w-72 hover:scale-105">
           <CardHeader shadow={false} floated={false} className="">
             <img
               // src={process.env.API_URL + image_url} kalo udah ada multer
-              src={image_url}
+              src={process.env.API_URL + image_url}
               alt="card-image"
               className="h-full w-full object-contain"
             />
@@ -70,7 +69,7 @@ export function ProductCard({ name, image_url, description, price, id }) {
               color="blue-gray"
               className=" font-extrabold text-[#1e2b62] text-lg"
             >
-              {name}
+              {product_name}
             </Typography>
 
             <Typography

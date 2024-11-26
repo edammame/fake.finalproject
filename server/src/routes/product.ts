@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { productController } from "../controllers/product";
+import { productController } from "../controllers/products";
 import { fileUploader } from "../middlewares/multer";
 import { verifyUser } from "../middlewares/auth-middleware";
 

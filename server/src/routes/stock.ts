@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { stockController } from "../controllers/stock";
+import { stockController } from "../controllers/stocks";
 
 export const route: Router = express.Router();
 route.get("/", stockController.getStocks);

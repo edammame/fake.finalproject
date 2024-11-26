@@ -103,11 +103,8 @@ function CategoriesComponent() {
 
   return (
     <>
-      <div className="flex justify-center my-20 lg:mx-20 md:mx-8">
-        <div className="hidden sm:grid grid-cols-3 gap-10 w-fit lg:flex flex-wrap justify-center">
-          {ctr}
-        </div>
-        <div className="sm:hidden w-fit text-xs gap-8 grid grid-cols-2">
+      <div className="flex justify-center my-20 mx-3 lg:mx-20 md:mx-8">
+        <div className="w-fit text-xs gap-8 md:gap-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:flex flex-wrap justify-center">
           {ctr}
         </div>
       </div>

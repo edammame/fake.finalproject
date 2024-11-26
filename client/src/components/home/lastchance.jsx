@@ -189,7 +189,7 @@ function LastChanceComponent() {
         <h1 className="lg:text-3xl md:text-2xl text-xl font-bold my-8 flex justify-center">
           LAST CHANCE!
         </h1>
-        <div className="grid grid-cols-2 md:flex justify-center h-full gap-3 xl:gap-6 lg:gap-2 md:gap-2">
+        <div className="grid grid-cols-2 md:flex justify-center h-full gap-3 sm:gap-5 xl:gap-6 lg:gap-2 md:gap-2">
           {list}
         </div>
       </main>

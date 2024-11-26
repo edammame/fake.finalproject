@@ -1,9 +1,9 @@
 "use client";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import producttSlice from "./slices/productSlice";
+import productSlice from "./slice/productSlice";
 const rootReducer = combineReducers({
-  product: producttSlice,
+  product: productSlice,
 });
 
 export const store = configureStore({
